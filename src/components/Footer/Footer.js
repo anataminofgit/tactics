@@ -13,43 +13,39 @@ const useStyles = makeStyles(styles);
 export default function Footer(props) {
   const classes = useStyles();
   return (
-    <footer className={classes.footer}>
+    <footer  className={classes.footer}>
       <div className={classes.container}>
-        <div className={classes.left}>
-          <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
+        <div className={classes.right}>
+          <List  className={classes.list}>
+            <ListItem  className={classes.inlineBlock}>
               <a href="#home" className={classes.block}>
-                Home
+                בית
               </a>
             </ListItem>
-            <ListItem className={classes.inlineBlock}>
+            <ListItem  className={classes.inlineBlock}>
               <a href="#company" className={classes.block}>
-                Company
+                אודות
               </a>
             </ListItem>
-            <ListItem className={classes.inlineBlock}>
+            <ListItem  className={classes.inlineBlock}>
               <a href="#portfolio" className={classes.block}>
-                Portfolio
+              פרופיל
               </a>
             </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#blog" className={classes.block}>
-                Blog
-              </a>
-            </ListItem>
+
           </List>
         </div>
-        <p className={classes.right}>
-          <span>
+        <p className={classes.left}>
+          <span >
             &copy; {1900 + new Date().getYear()}{" "}
-            <a
+            <a 
               href="https://www.creative-tim.com?ref=mdr-footer"
               target="_blank"
               className={classes.a}
             >
               Creative Tim
             </a>
-            , made with love for a better web
+          
           </span>
         </p>
       </div>
