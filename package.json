@@ -1,12 +1,14 @@
 {
-  "name": "material-dashboard-react",
+  "name": "tactics",
   "version": "1.8.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
+  "description": "tactics web based on Creative Tim",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
     "@material-ui/core": "4.3.2",
     "@material-ui/icons": "4.2.1",
+    "aws-amplify": "^2.2.7",
+    "aws-amplify-react": "^3.1.8",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "history": "4.9.0",

@@ -21,7 +21,7 @@ const useStyles = makeStyles(styles);
 
 export default function Tasks(props) {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([...props.checkedIndexes]);
+  const [checked, setChecked] = [...props.checkedIndexes];
   const handleToggle = value => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
