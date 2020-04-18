@@ -13,9 +13,12 @@ import TableCell from "@material-ui/core/TableCell";
 import Button from "components/CustomButtons/Button.js";
 
 // @material-ui/icons
+import Icon from "@material-ui/core/Icon";
+
 //import Edit from "@material-ui/icons/Edit";
-import Add from "@material-ui/icons/Add";
-import Remove from "@material-ui/icons/Remove";
+//import Icon from "@material-ui/core/Icon";
+//import Remove from "@material-ui/icons/Remove";
+import { green } from "@material-ui/core/colors";
 
 //import Close from "@material-ui/icons/Close";
 //import Check from "@material-ui/icons/Check";
@@ -117,13 +120,9 @@ export default function ShoppingTable(props) {
                   aria-label="Add"
                   className={classes.iconButton}
                 >
-                  <Add
-                    id={key}
-                    value={key}
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.close
-                    }
-                  />
+                  <Icon id={key} value={key} style={{ color: green[500] }}>
+                    add_circle
+                  </Icon>
                 </IconButton>
                 <p className={classes.top}>{productQuantity[key]}</p>
                 <IconButton
@@ -133,13 +132,9 @@ export default function ShoppingTable(props) {
                   className={classes.iconButton}
                   onClick={handleMinus}
                 >
-                  <Remove
-                    id={key}
-                    value={key}
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.close
-                    }
-                  />
+                  <Icon id={key} value={key} color="secondary">
+                    remove_circle
+                  </Icon>
                 </IconButton>
               </TableCell>
               <TableCell className={tableCellClasses}>

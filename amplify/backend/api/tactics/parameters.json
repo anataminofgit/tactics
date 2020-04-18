@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "tactics",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authtacticse351a949",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

@@ -1,0 +1,75 @@
+type Course @model {
+  id: ID!
+  title: String!
+  teacherName: String
+  startAt : AWSDate
+
+  students: [Student]  @connection(keyName: "byStudentCourse", fields: ["id"])
+  tasks: [Task] @connection(keyName: "byCourse", fields: ["id"])
+  products: [Product] @connection(keyName: "byCourse", fields: ["id"])
+}
+
+# Create a join model and disable queries as you don't need them
+# and can query through Post.editors and User.posts
+
+type TaskWithAnswer
+@model
+@key(name: "byTaskStudent", fields: ["taskID"])
+{
+id : ID!
+task : Task @connection(name: "byTaskStudent")
+uploadPath: String
+taskID : ID
+}
+
+
+type Task
+  @model
+  @key(name: "byCourse", fields: ["courseID"])
+  {
+  id: ID!
+  courseID: ID!
+  title: String!
+  content : String
+  toUpload: Boolean!
+  taskWithAnswer: TaskWithAnswer @connection(name: "byTaskStudent")
+}
+
+type Product
+  @model
+  @key(name: "byCourse", fields: ["courseID"])
+{
+  id: ID!
+  courseID: ID
+  studentInfo: StudentProduct @connection(name: "byStudent")
+  name: String
+  price: Int
+
+}
+type StudentProduct
+@model 
+@key(name: "byStudent", fields: ["studentID"])
+{
+  id: ID!
+  studentID: ID
+  product : Product @connection(name: "byStudent")
+  quantity :Int
+}
+
+
+
+type Student @model 
+ @key(name: "byStudentCourse", fields: ["courseID"])
+{
+  id: ID!
+  name: String!
+  address: String
+  phone: AWSPhone
+  email : String!
+  courseID :ID
+  tasks: [TaskWithAnswer] @connection(keyName: "byTaskStudent", fields: ["id"])
+  studentProducts: [StudentProduct] @connection(keyName: "byStudent", fields: ["id"])
+}
+
+
+
