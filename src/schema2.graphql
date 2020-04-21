@@ -1,12 +1,8 @@
-type Course @model
-  @key(name: "queryName", fields:["queryName", "title"], queryField: "coursesByName" ) 
-{
+type Course @model {
   id: ID!
-  queryName : String!
   title: String!
-  teacherName: String!
-  startAt : AWSDate!
-  teacherEmail: String
+  teacherName: String
+  startAt : AWSDate
 
   students: [Student]  @connection(keyName: "byStudentCourse", fields: ["id"])
   tasks: [Task] @connection(keyName: "byCourse", fields: ["id"])
@@ -42,12 +38,9 @@ type Task
 type Product
   @model
   @key(name: "byCourse", fields: ["courseID"])
-  @key(name: "queryName", fields:["queryName", "name"], queryField: "productsByName" ) 
-
 {
   id: ID!
   courseID: ID
-  queryName:String!
   studentInfo: StudentProduct @connection(name: "byStudent")
   name: String
   price: Int
@@ -67,12 +60,9 @@ type StudentProduct
 
 type Student @model 
  @key(name: "byStudentCourse", fields: ["courseID"])
- @key(name: "queryName", fields:["queryName", "name"], queryField: "studentsByName" ) 
-queryName: 
 {
   id: ID!
   name: String!
-  queryName: String!
   address: String
   phone: AWSPhone
   email : String!

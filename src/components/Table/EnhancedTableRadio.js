@@ -118,11 +118,13 @@ export default function EnhancedTableRadio(props) {
     rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
 
   const renderCell = row => {
-    return row.map((cell, index) => {
-      if (tableHead[index].label !== null)
+    return tableHead.map((item, index) => {
+      //console.log(" {row[item.id]}", item.id, row[item.id]);
+
+      if (item.label !== null)
         return (
           <TableCell key={index} align="right">
-            {cell}
+            {row[item.id]}
           </TableCell>
         );
       return null;
@@ -151,17 +153,17 @@ export default function EnhancedTableRadio(props) {
               {stableSort(tableData, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row[0]);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
                       align="right"
                       hover
-                      onClick={event => handleClick(event, row[0])}
+                      onClick={event => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row[0]}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -210,7 +212,7 @@ EnhancedTableRadio.propTypes = {
     "rose",
     "gray"
   ]),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
   tableHead: PropTypes.arrayOf(PropTypes.object).isRequired,
   initialOrderBy: PropTypes.string.isRequired,
   onSelectedRow: PropTypes.func.isRequired

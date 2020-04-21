@@ -18,10 +18,11 @@ import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 import EnhancedTableRadio from "../../components/Table/EnhancedTableRadio";
 //import EnhancedTable from "../../components/Table/EnhancedTable";
 
-import { listCoursesHeaders } from "../../graphql/queries2";
+//import { listCoursesHeaders } from "../../graphql/queries2";
+import { courseByName } from "../../graphql/queries";
 import { getCourse } from "../../graphql/queries";
 
-import { createCourse, updateCourse } from "../../graphql/mutations2";
+import { createCourse, updateCourse } from "../../graphql/mutations";
 //import { onCreateCourse, onUupdateCourse } from "../../graphql/subscriptions2";
 import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
 
@@ -39,7 +40,7 @@ export default function Course() {
     id: null,
     titel: "",
     teacherName: "",
-    startedAt: null
+    startAt: ""
   });
 
   const useStyles = makeStyles(styles);
@@ -49,103 +50,109 @@ export default function Course() {
     { id: "id", numeric: false, disablePadding: true, label: null },
     { id: "title", numeric: false, disablePadding: true, label: "שם בקורס" },
     {
-      id: "TeacherName",
+      id: "teacherName",
       numeric: false,
       disablePadding: true,
       label: "שם המדריך"
     },
-    { id: "startAt", numeric: true, disablePadding: true, label: "תאריך התחלה" }
+    {
+      id: "startAt",
+      numeric: true,
+      disablePadding: true,
+      label: "תאריך התחלה"
+    }
   ];
 
   const handleCreateCourse = async course => {
-    const newCourse = await API.graphql(
+    const newCourseData = await API.graphql(
       graphqlOperation(createCourse, {
         input: {
           title: course.title,
           teacherName: course.teacherName,
+          queryName: "Course",
           startAt: course.startAt
         }
       })
     );
-    console.log(newCourse, course);
+    /// console.log("newCourseData", newCourseData);
+    fetchListCourseQuery();
+    const { id, startAt, title, teacherName } = newCourseData.data.createCourse;
 
-    setSelectedCourse(newCourse.data.createCourse);
+    // setTable([...table, { id, title, teacherName, startAt }]);
+
+    setSelectedCourse({ id, title, teacherName, startAt });
   };
 
   const handleUpdateCourse = async course => {
-    const newCourse = await API.graphql(
-      graphqlOperation(updateCourse, {
-        input: {
-          id: course.id,
-          title: course.title,
-          teacherName: course.teacherName,
-          startAt: course.startAt
-        }
-      })
-    );
-    console.log(newCourse);
+    try {
+      /*  const udpaeCourseData =  */ await API.graphql(
+        graphqlOperation(updateCourse, {
+          input: {
+            id: course.id,
+            title: course.title,
+            queryName: "Course",
+            teacherName: course.teacherName,
+            startAt: course.startAt
+          }
+        })
+      );
+
+      /*     const {
+        id,
+        title,
+        teacherName,
+        startAt
+      } = udpaeCourseData.data.updateCourse; */
+      fetchListCourseQuery();
+      //    const arr = [...table];
+      //   const index = arr.findIndex(line => line.id === id);
+
+      //   arr.splice(index, 1, { id, title, teacherName, startAt });
+      //  console.log("arr2 ", arr);
+      //    setTable(arr);
+    } catch (error) {
+      console.log("error - update", error);
+    }
   };
 
   const fetchListCourseQuery = async () => {
     try {
-      const response = await API.graphql(graphqlOperation(listCoursesHeaders));
-      console.log("response.data", response.data.listCourses.items);
+      //     const response = await API.graphql(graphqlOperation(listCoursesHeaders));
+      const response = await API.graphql(
+        graphqlOperation(courseByName, {
+          queryName: "Course",
+          sortDirection: "ASC"
+        })
+      );
 
-      const data = response.data.listCourses.items;
+      const data = response.data.courseByName.items;
       const arr = data.map(function(item) {
-        // console.log("aaa", item.startAt);
-        return [item.id, item.title, item.teacherName, item.startAt];
+        return {
+          id: item.id,
+          title: item.title,
+          teacherName: item.teacherName,
+          startAt: item.startAt
+        };
       });
 
+     // console.log("array", arr);
       setTable(arr);
     } catch (error) {
       console.log("error - fetchListCourseQuery", error);
     }
   };
 
-  /*   const fetchGetCourseQuery = async courseId => {
-  }; */
-
   useEffect(() => {
-    // Update the document title using the browser API
-
     fetchListCourseQuery();
-
-    //console.log("useEffect", selectedCourse, table);
-
-    /*   const subscriber = API.graphql(graphqlOperation(onCreateCourse)).subscribe({
-      next: data => {
-        const newCourse = data.value.data.onCreatePost
-        dispatch({
-          type: 'addNewCourseSubscription',
-          post: newCourse
-        })
-      }
-    });
-    return () => subscriber.unsubscribe() */
   }, []);
 
-  /*   useEffect(() => {
-    const subscriber = API.graphql(graphqlOperation(onCreateCourse)).subscribe({
-      next: data => {
-        const newCourse = data.value.data.onUpdaeCourse
-        dispatch({
-          type: 'updateCourseSubscription',
-          post: newCourse
-        })
-      }
-    });
-    return () => subscriber.unsubscribe()
-  }, []); */
-
   const handleSelectedRow = async rowId => {
-    console.log("handleSelectedRow", { id: rowId });
-    const ID = rowId;
     try {
       const response = await API.graphql(
-        graphqlOperation(getCourse, { input: { ID } })
+        graphqlOperation(getCourse, {
+          id: rowId
+        })
       );
-      console.log("handle.getCourse.items", response.data.getCourse);
 
       const data = response.data.getCourse;
 
@@ -161,6 +168,7 @@ export default function Course() {
   };
 
   const label = headCells[1].label;
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={6}>

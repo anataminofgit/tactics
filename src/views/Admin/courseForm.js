@@ -1,5 +1,5 @@
 //useEffect
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 /* import classNames from "classnames";
@@ -48,12 +48,11 @@ export default function CourseForm(props) {
   const useStyles = makeStyles(styles);
 
   const classes = useStyles();
-  const { updateCourse, createCourse } = props;
+  const { updateCourse, createCourse, selcetedCourseInput } = props;
 
-  const [inputValues, setInputValues] = useState({
-    id: null,
-    startAt: null
-  });
+  //console.log("selcetedCourseInput", selcetedCourseInput);
+
+  const [inputValues, setInputValues] = useState(selcetedCourseInput);
 
   const onUpdateCourse = () => {
     updateCourse(inputValues);
@@ -68,9 +67,18 @@ export default function CourseForm(props) {
   };
 
   const handleDateChange = date => {
-    console.log("date", date);
-    setInputValues({ ...inputValues, startAt: date });
+    const shortDate = date; //.toLocaleDateString("en-GB");
+    setInputValues({ ...inputValues, startAt: shortDate });
   };
+
+  useEffect(() => {
+    setInputValues({
+      id: selcetedCourseInput.id,
+      title: selcetedCourseInput.title,
+      startAt: selcetedCourseInput.startAt,
+      teacherName: selcetedCourseInput.teacherName
+    });
+  }, [selcetedCourseInput]);
 
   return (
     <GridContainer>
@@ -86,12 +94,13 @@ export default function CourseForm(props) {
                 <CustomInput
                   labelText="ID (disabled)"
                   id="ID-disabled"
-                  value={inputValues.id}
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
-                    disabled: true
+                    disabled: true,
+                    value: inputValues.id || "",
+                    name: "id"
                   }}
                 />
               </GridItem>
@@ -100,13 +109,13 @@ export default function CourseForm(props) {
               <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
                   labelText="שם הקורס"
-                  value={inputValues.title}
                   id="course name"
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
                     onChange: handleInputChange,
+                    value: inputValues.title || "",
                     name: "title"
                   }}
                 />
@@ -117,13 +126,12 @@ export default function CourseForm(props) {
                 <CustomInput
                   labelText="שם המדריך"
                   id="teacher rname"
-                  value={inputValues.teacherName}
-                  name="teacherName"
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
                     onChange: handleInputChange,
+                    value: inputValues.teacherName,
                     name: "teacherName"
                   }}
                 />
@@ -133,12 +141,12 @@ export default function CourseForm(props) {
                   onChange={handleInputChange}
                   labelText="כתובת Email של המדריך"
                   id="teacher-email-address"
-                  value={inputValues.teacherEmail}
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
                     onChange: handleInputChange,
+                    value: inputValues.teacherEmail || "",
                     name: "teacherEmail"
                   }}
                 />
@@ -151,7 +159,7 @@ export default function CourseForm(props) {
                     <KeyboardDatePicker
                       label="Start Date of Course"
                       placeholder="31/10/20"
-                      value={inputValues.startAt}
+                      value={inputValues.startAt || Date()}
                       onChange={date => handleDateChange(date)}
                       format="dd/MM/yyyy"
                     />
@@ -197,5 +205,7 @@ export default function CourseForm(props) {
 
 CourseForm.propTypes = {
   createCourse: PropTypes.func.isRequired,
-  updateCourse: PropTypes.func.isRequired
+  updateCourse: PropTypes.func.isRequired,
+  // deleteCourse: PropTypes.func.isRequired,
+  selcetedCourseInput: PropTypes.object.isRequired
 };

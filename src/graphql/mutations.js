@@ -8,9 +8,11 @@ export const createCourse = /* GraphQL */ `
   ) {
     createCourse(input: $input, condition: $condition) {
       id
+      queryName
       title
       teacherName
       startAt
+      teacherEmail
       students {
         items {
           id
@@ -19,6 +21,12 @@ export const createCourse = /* GraphQL */ `
           phone
           email
           courseID
+          tasks {
+            nextToken
+          }
+          studentProducts {
+            nextToken
+          }
         }
         nextToken
       }
@@ -29,6 +37,11 @@ export const createCourse = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         nextToken
       }
@@ -36,6 +49,12 @@ export const createCourse = /* GraphQL */ `
         items {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -51,9 +70,11 @@ export const updateCourse = /* GraphQL */ `
   ) {
     updateCourse(input: $input, condition: $condition) {
       id
+      queryName
       title
       teacherName
       startAt
+      teacherEmail
       students {
         items {
           id
@@ -62,6 +83,12 @@ export const updateCourse = /* GraphQL */ `
           phone
           email
           courseID
+          tasks {
+            nextToken
+          }
+          studentProducts {
+            nextToken
+          }
         }
         nextToken
       }
@@ -72,6 +99,11 @@ export const updateCourse = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         nextToken
       }
@@ -79,6 +111,12 @@ export const updateCourse = /* GraphQL */ `
         items {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -94,9 +132,11 @@ export const deleteCourse = /* GraphQL */ `
   ) {
     deleteCourse(input: $input, condition: $condition) {
       id
+      queryName
       title
       teacherName
       startAt
+      teacherEmail
       students {
         items {
           id
@@ -105,6 +145,12 @@ export const deleteCourse = /* GraphQL */ `
           phone
           email
           courseID
+          tasks {
+            nextToken
+          }
+          studentProducts {
+            nextToken
+          }
         }
         nextToken
       }
@@ -115,6 +161,11 @@ export const deleteCourse = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         nextToken
       }
@@ -122,6 +173,12 @@ export const deleteCourse = /* GraphQL */ `
         items {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -145,6 +202,13 @@ export const createTaskWithAnswer = /* GraphQL */ `
         toUpload
         taskWithAnswer {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -169,6 +233,13 @@ export const updateTaskWithAnswer = /* GraphQL */ `
         toUpload
         taskWithAnswer {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -193,6 +264,13 @@ export const deleteTaskWithAnswer = /* GraphQL */ `
         toUpload
         taskWithAnswer {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -221,6 +299,11 @@ export const createTask = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         uploadPath
         taskID
@@ -247,6 +330,11 @@ export const updateTask = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         uploadPath
         taskID
@@ -273,6 +361,11 @@ export const deleteTask = /* GraphQL */ `
           title
           content
           toUpload
+          taskWithAnswer {
+            id
+            uploadPath
+            taskID
+          }
         }
         uploadPath
         taskID
@@ -288,12 +381,19 @@ export const createProduct = /* GraphQL */ `
     createProduct(input: $input, condition: $condition) {
       id
       courseID
+      queryName
       studentInfo {
         id
         studentID
         product {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -312,12 +412,19 @@ export const updateProduct = /* GraphQL */ `
     updateProduct(input: $input, condition: $condition) {
       id
       courseID
+      queryName
       studentInfo {
         id
         studentID
         product {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -336,12 +443,19 @@ export const deleteProduct = /* GraphQL */ `
     deleteProduct(input: $input, condition: $condition) {
       id
       courseID
+      queryName
       studentInfo {
         id
         studentID
         product {
           id
           courseID
+          queryName
+          studentInfo {
+            id
+            studentID
+            quantity
+          }
           name
           price
         }
@@ -363,9 +477,17 @@ export const createStudentProduct = /* GraphQL */ `
       product {
         id
         courseID
+        queryName
         studentInfo {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         name
@@ -386,9 +508,17 @@ export const updateStudentProduct = /* GraphQL */ `
       product {
         id
         courseID
+        queryName
         studentInfo {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         name
@@ -409,9 +539,17 @@ export const deleteStudentProduct = /* GraphQL */ `
       product {
         id
         courseID
+        queryName
         studentInfo {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         name
@@ -436,6 +574,13 @@ export const createStudent = /* GraphQL */ `
       tasks {
         items {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -445,6 +590,13 @@ export const createStudent = /* GraphQL */ `
         items {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         nextToken
@@ -467,6 +619,13 @@ export const updateStudent = /* GraphQL */ `
       tasks {
         items {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -476,6 +635,13 @@ export const updateStudent = /* GraphQL */ `
         items {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         nextToken
@@ -498,6 +664,13 @@ export const deleteStudent = /* GraphQL */ `
       tasks {
         items {
           id
+          task {
+            id
+            courseID
+            title
+            content
+            toUpload
+          }
           uploadPath
           taskID
         }
@@ -507,6 +680,13 @@ export const deleteStudent = /* GraphQL */ `
         items {
           id
           studentID
+          product {
+            id
+            courseID
+            queryName
+            name
+            price
+          }
           quantity
         }
         nextToken

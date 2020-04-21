@@ -20,13 +20,46 @@ export const listCoursesHeaders = /* GraphQL */ `
   }
 `;
 
+
 export const getCourse = /* GraphQL */ `
-  query GetCourse($id: ID!) {
-    getCourse(id: $id) {
+  query GetCourse($title: String!, $teacherName: String!, $startAt: AWSDate!) {
+    getCourse(title: $title, teacherName: $teacherName, startAt: $startAt) {
       id
       title
       teacherName
       startAt
+      teacherEmail
+    }
+  }
+`;
+
+
+export const courseByName = /* GraphQL */ `
+  query CourseByName(
+    $queryName: String
+    $title: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCourseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    courseByName(
+      queryName: $queryName
+      title: $title
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        queryName
+        title
+        teacherName
+        startAt
+        teacherEmail 
+      }
+      nextToken
     }
   }
 `;

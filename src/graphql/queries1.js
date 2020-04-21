@@ -2,14 +2,12 @@
 // this is an auto generated file. This will be overwritten
 
 export const getCourse = /* GraphQL */ `
-  query GetCourse($id: ID!) {
+  query GetCourse($id: String!) {
     getCourse(id: $id) {
       id
-      queryName
       title
       teacherName
       startAt
-      teacherEmail
       students {
         items {
           id
@@ -46,7 +44,6 @@ export const getCourse = /* GraphQL */ `
         items {
           id
           courseID
-          queryName
           studentInfo {
             id
             studentID
@@ -69,11 +66,9 @@ export const listCourses = /* GraphQL */ `
     listCourses(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        queryName
         title
         teacherName
         startAt
-        teacherEmail
         students {
           items {
             id
@@ -99,7 +94,6 @@ export const listCourses = /* GraphQL */ `
           items {
             id
             courseID
-            queryName
             name
             price
           }
@@ -229,14 +223,12 @@ export const getProduct = /* GraphQL */ `
     getProduct(id: $id) {
       id
       courseID
-      queryName
       studentInfo {
         id
         studentID
         product {
           id
           courseID
-          queryName
           studentInfo {
             id
             studentID
@@ -262,14 +254,12 @@ export const listProducts = /* GraphQL */ `
       items {
         id
         courseID
-        queryName
         studentInfo {
           id
           studentID
           product {
             id
             courseID
-            queryName
             name
             price
           }
@@ -290,14 +280,12 @@ export const getStudentProduct = /* GraphQL */ `
       product {
         id
         courseID
-        queryName
         studentInfo {
           id
           studentID
           product {
             id
             courseID
-            queryName
             name
             price
           }
@@ -323,7 +311,6 @@ export const listStudentProducts = /* GraphQL */ `
         product {
           id
           courseID
-          queryName
           studentInfo {
             id
             studentID
@@ -369,7 +356,6 @@ export const getStudent = /* GraphQL */ `
           product {
             id
             courseID
-            queryName
             name
             price
           }
@@ -410,106 +396,6 @@ export const listStudents = /* GraphQL */ `
           }
           nextToken
         }
-      }
-      nextToken
-    }
-  }
-`;
-export const courseByName = /* GraphQL */ `
-  query CourseByName(
-    $queryName: String
-    $title: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCourseFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    courseByName(
-      queryName: $queryName
-      title: $title
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        queryName
-        title
-        teacherName
-        startAt
-        teacherEmail
-        students {
-          items {
-            id
-            name
-            address
-            phone
-            email
-            courseID
-          }
-          nextToken
-        }
-        tasks {
-          items {
-            id
-            courseID
-            title
-            content
-            toUpload
-          }
-          nextToken
-        }
-        products {
-          items {
-            id
-            courseID
-            queryName
-            name
-            price
-          }
-          nextToken
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const productByName = /* GraphQL */ `
-  query ProductByName(
-    $queryName: String
-    $name: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelProductFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    productByName(
-      queryName: $queryName
-      name: $name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        courseID
-        queryName
-        studentInfo {
-          id
-          studentID
-          product {
-            id
-            courseID
-            queryName
-            name
-            price
-          }
-          quantity
-        }
-        name
-        price
       }
       nextToken
     }
