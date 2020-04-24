@@ -7,6 +7,10 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableHead from "@material-ui/core/TableHead";
 
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
+//import CustomInput from "components/CustomInput/CustomInput";
+
+import InputLabel from "@material-ui/core/InputLabel";
+
 const useStyles = makeStyles(styles);
 
 export default function EnhancedTableHead(props) {
@@ -24,20 +28,24 @@ export default function EnhancedTableHead(props) {
             key={headCell.label}
             sortDirection={orderBy === headCell.label ? order : false}
           >
-            <TableSortLabel
-              align="right"
-              active={orderBy === headCell.label}
-              direction={orderBy === headCell.label ? order : "asc"}
-              onClick={createSortHandler(headCell.label)}
-            >
-              {headCell.label}
-              {orderBy === headCell.label ? (
-                <span align="right" className={classes.visuallyHidden}>
-                  <br />
-                  {order === "desc" ? "desc" : "asc"}
-                </span>
-              ) : null}
-            </TableSortLabel>
+            {headCell.toSort === true ? (
+              <TableSortLabel
+                align="right"
+                active={orderBy === headCell.label}
+                direction={orderBy === headCell.label ? order : "asc"}
+                onClick={createSortHandler(headCell.label)}
+              >
+                {headCell.label}
+                {orderBy === headCell.label ? (
+                  <span align="right" className={classes.visuallyHidden}>
+                    <br />
+                    {order === "desc" ? "desc" : "asc"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            ) : (
+              <InputLabel>{headCell.label}</InputLabel>
+            )}
           </TableCell>
         );
       else return null;

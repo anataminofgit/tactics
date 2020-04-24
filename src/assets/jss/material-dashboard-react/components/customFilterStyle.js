@@ -6,7 +6,7 @@ import {
   defaultFont
 } from "assets/jss/material-dashboard-react.js";
 
-const customInputStyle = {
+const customFilterStyle = {
   disabled: {
     "&:before": {
       backgroundColor: "transparent !important"
@@ -37,7 +37,9 @@ const customInputStyle = {
     fontWeight: "400",
     fontSize: "14px",
     lineHeight: "1.42857",
-    letterSpacing: "unset"
+    letterSpacing: "unset",
+    textAlign: "right"
+
   },
   labelRootError: {
     color: dangerColor[0]
@@ -65,7 +67,9 @@ const customInputStyle = {
     position: "relative",
     verticalAlign: "unset",
     minWidth: 200
+
   }
+
 };
 
-export default customInputStyle;
+export default customFilterStyle;

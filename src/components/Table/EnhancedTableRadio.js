@@ -16,7 +16,7 @@ import EnhancedTableHead from "./EnhanceTableHead";
 //import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 //const useStyles = makeStyles(styles);
 
-function descendingComparator(a, b, orderBy) {
+/* function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -24,15 +24,15 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
-function getComparator(order, orderBy) {
+} */
+/* function getComparator(order, orderBy) {
   //console.log("getComparator", order, orderBy);
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+} */
 
-function stableSort(array, comparator) {
+/* function stableSort(array, comparator) {
   //console.log("stableSort array", array);
   const stabilizedThis = array.map((el, index) => [el, index]);
   //console.log("stableSort stabilizedThis", stabilizedThis);
@@ -46,7 +46,7 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map(el => el[0]);
 }
-
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
@@ -77,7 +77,8 @@ export default function EnhancedTableRadio(props) {
     tableData,
     tableHeaderColor,
     initialOrderBy,
-    onSelectedRow
+    onSelectedRow,
+    onGetMoreRows
   } = props;
 
   const classes = useStyles();
@@ -103,7 +104,10 @@ export default function EnhancedTableRadio(props) {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    if (tableData.length <= newPage * rowsPerPage + 2 * rowsPerPage) {
+      if (newPage * rowsPerPage < tableData.length) setPage(newPage);
+      /* if (tableNextToken) */ onGetMoreRows(false);
+    } else setPage(newPage);
   };
 
   const handleChangeRowsPerPage = event => {
@@ -130,6 +134,9 @@ export default function EnhancedTableRadio(props) {
       return null;
     });
   };
+  //console.log( " length and page" ,tableData.length, (page * rowsPerPage))
+
+  if (tableData.length < page * rowsPerPage) setPage(0);
 
   return (
     <div className={classes.root}>
@@ -150,7 +157,7 @@ export default function EnhancedTableRadio(props) {
               tableHeaderColor={tableHeaderColor}
             />
             <TableBody>
-              {stableSort(tableData, getComparator(order, orderBy))
+              {tableData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -187,11 +194,13 @@ export default function EnhancedTableRadio(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={tableData.length}
+          count={-1}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
+          labelRowsPerPage="מספר שורות בכל דף"
+          labelDisplayedRows={({ from, to }) => `שורות ${from}-${to} `}
         />
       </Paper>
       <FormControlLabel
@@ -215,5 +224,7 @@ EnhancedTableRadio.propTypes = {
   tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
   tableHead: PropTypes.arrayOf(PropTypes.object).isRequired,
   initialOrderBy: PropTypes.string.isRequired,
-  onSelectedRow: PropTypes.func.isRequired
+  onSelectedRow: PropTypes.func.isRequired,
+  tableNextToken: PropTypes.bool,
+  onGetMoreRows: PropTypes.func.isRequired
 };

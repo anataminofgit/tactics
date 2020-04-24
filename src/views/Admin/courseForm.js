@@ -67,7 +67,7 @@ export default function CourseForm(props) {
   };
 
   const handleDateChange = date => {
-    const shortDate = date; //.toLocaleDateString("en-GB");
+    const shortDate = date.toLocaleDateString("en-US"); //.toLocaleDateString("en-GB");
     setInputValues({ ...inputValues, startAt: shortDate });
   };
 
