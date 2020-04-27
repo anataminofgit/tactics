@@ -1,29 +1,47 @@
-import React, { createContext, useReducer /* useEffect */ } from "react";
-import { authReducer } from "../reducer/authreducer";
-//import { Hub } from "aws-amplify";
-//import { Auth } from "aws-amplify";
+import React, { createContext, useEffect } from "react";
+import PropTypes from "prop-types";
+
+import { Auth } from "aws-amplify";
 
 export const AuthContext = createContext();
 
-/* async function getAuth() {
-  // try {
-  //  const user = await Auth.currentAuthenticatedUser();
-  return { user: "anat.aminof.test@gmail.com", group: "teacher" };
-  //console.log("user:", user);
-  // } catch (error) {
-  //    console.log("error", error);
-  //  }
-} */
-
 const AuthContextProvider = props => {
-  const [authInfo, dispatch] = useReducer(authReducer, {
-    user: "anat.aminof.test@gmail.com",
-    group: "teacher"
+  const [userInfo, setUserInfo] = React.useState({
+    authUser: null,
+    authGroup: []
   });
-  console.log("props.children", props.children);
+
+  const updateAuthInfo = (user, group) => {
+    setUserInfo({ authUser: user, authGroup: group });
+  };
+
+  async function getAuth() {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      // console.log("user:", user);
+      const groups = user.signInUserSession.idToken.payload["cognito:groups"];
+      const { email } = user.signInUserSession.idToken.payload;
+
+      console.log("user groups:", email, groups);
+
+      return { email: email, authGroup: groups };
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  useEffect(() => {
+    getAuth().then(value => {
+      if (value) updateAuthInfo(value.email, value.authGroup);
+    });
+
+    return () => {
+      // cleanup
+    };
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ authInfo, dispatch }}>
+    <AuthContext.Provider value={{ userInfo, updateAuthInfo }}>
       {props.children}
     </AuthContext.Provider>
   );
@@ -31,24 +49,6 @@ const AuthContextProvider = props => {
 
 export default AuthContextProvider;
 
-//console.log("this", this.props.children, "props", props);
-/* useEffect(() => {
-    console.log("hiiii");
-    Hub.listen("auth", data => {
-      const { payload } = data;
-      console.log("A new auth event has happened: ", data);
-      if (payload.event === "signIn") {
-        console.log("a user has signed in!");
-        dispatch({
-          type: "LOGIN",
-          user: payload.data.attributes.email,
-          group: payload.data.attributes.group
-        });
-      }
-      if (payload.event === "signOut") {
-        console.log("a user has signed out!");
-        dispatch({ type: "LOGOUT", user: payload.data, group: payload.data });
-      }
-    });
-  }, [authInfo]);
- */
+AuthContextProvider.propTypes = {
+  children: PropTypes.any
+};

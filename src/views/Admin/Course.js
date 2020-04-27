@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+
+import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
@@ -5,20 +8,18 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 import EnhancedTableRadio from "../../components/Table/EnhancedTableRadio";
-//import { courseByName } from "../../graphql/queries";
+import CustomizedFilter from "components/Table/CustomizedFilter.js";
+import CourseForm from "./courseForm";
+
 import { getCourse } from "../../graphql/queries";
 import { createCourse, updateCourse } from "../../graphql/mutations";
 import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CourseForm from "./courseForm";
-import { fetchListCourseQuery } from "./CourseQueries";
-import CustomizedFilter from "components/Table/CustomizedFilter.js";
-//let courseFilter = null;
-//let coursesNextToken = null;
+import {
+  fetchListCourseQuery,
+  fetchFilterListCourseQuery
+} from "./CourseQueries";
 
 export default function Course() {
-  // Declare a new state variable, which we'll call "count"
   const [table, setTable] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({
     id: null,
@@ -26,8 +27,6 @@ export default function Course() {
     teacherName: "",
     startAt: ""
   });
-  /*   const [nextToken, setNextToken] = useState(null);
-   */
 
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -85,16 +84,6 @@ export default function Course() {
 
       setSelectedCourse({ id, title, teacherName, startAt });
 
-      /*       setTable([]);
-      setNextToken(null);
-
- */
-      /*       const arr = fetchListCourseQuery(true, null);
-      console.log("aaa", arr);
-      setTable([...arr]);
-
- */
-
       fetchListCourseQuery(true)
         .then(value => {
           setTable([...value]);
@@ -119,13 +108,7 @@ export default function Course() {
             startAt: course.startAt
           }
         })
-      ); /* fetchListCourseQuery(
-        true
-      ); */ //
-
-      /*       setTable([]);
-      setNextToken(null);
- */
+      );
       fetchListCourseQuery(true)
         .then(value => {
           setTable([...value]);
@@ -133,64 +116,10 @@ export default function Course() {
         .catch(err => {
           console.log("err use effect", err);
         });
-
-      /*       const arr = fetchListCourseQuery(true, null);
-      setTable(...arr); */
     } catch (error) {
       console.log("error - update", error);
     }
   };
-
-  /* const fetchListCourseQuery = async restart => {
-    var toRestart = restart;
-    var count = 0;
-    var localNextToken = coursesNextToken;
-    var localArray = [];
-    let toContinue = true;
-
-    console.log("restart", restart, "nexttoken", coursesNextToken);
-    if (coursesNextToken ||  toRestart) {
-      while (toContinue) {
-        try {
-          const response = await API.graphql(
-            graphqlOperation(courseByName, {
-              queryName: "Course",
-              sortDirection: "ASC",
-              nextToken: toRestart ? null : localNextToken,
-              filter: courseFilter
-            })
-          );
-
-          const data = response.data.courseByName.items;
-          localNextToken = response.data.courseByName.nextToken;
-
-          const arr = data.map(function(item) {
-            return {
-              id: item.id,
-              title: item.title,
-              teacherName: item.teacherName,
-              startAt: item.startAt
-            };
-          });
-          count = count + arr.length;
-
-          localArray = [...localArray, ...arr];
-          toRestart = false;
-          if (localNextToken === null || count > 9) {
-            toContinue = false;
-            if (restart) setTable(localArray);
-            else setTable([...table, ...localArray]);
-          }
-          coursesNextToken = localNextToken;
-          console.log("next tiken", coursesNextToken);
-        } catch (error) {
-          console.log("error - fetchListCourseQuery", error);
-        }
-      }
-    }
-    console.log("restart", restart, "nexttoken", coursesNextToken);
-  };
- */
 
   useEffect(() => {
     fetchListCourseQuery(true, null)
@@ -200,8 +129,6 @@ export default function Course() {
       .catch(err => {
         console.log("err use effect", err);
       });
-
-    // fetchListCourseQuery(true);
   }, []);
 
   const onCourseFilterSearch = async (
@@ -209,34 +136,14 @@ export default function Course() {
     selectedIndex,
     fieldValue
   ) => {
-    console.log(
-      "onCourseFilterSearch",
-      selectedItem,
-      selectedIndex,
-      fieldValue
-    );
-
-    const courseFilters = [
-      { title: { contains: fieldValue } },
-      { teacherName: { contains: fieldValue } },
-      { startAt: { contains: fieldValue } }
-    ];
-
-    const courseFilter = selectedItem ? courseFilters[selectedIndex] : null;
-    //setTable([]);
-    //coursesNextToken = null;
-
-    //fetchListCourseQuery(true);
-    fetchListCourseQuery(true, courseFilter)
+    fetchFilterListCourseQuery(selectedIndex, fieldValue)
       .then(value => {
-        setTable([...value]);
+        if (value) setTable([...value]);
+        else setTable([]);
       })
       .catch(err => {
         console.log("err use effect", err);
       });
-
-    /*   const arr = fetchListCourseQuery(true, courseFilter);
-    setTable(...arr); */
   };
 
   const handleSelectedRow = async rowId => {
@@ -269,10 +176,6 @@ export default function Course() {
       .catch(err => {
         console.log("err use effect", err);
       });
-
-    /*     const arr = fetchListCourseQuery(false, null);
-    setTable([...table, ...arr]);
- */
   };
 
   const label = headCells[1].label;

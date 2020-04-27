@@ -21,16 +21,13 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/rtl") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      return null;
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
     })}
     <Redirect from="/rtl" to="/rtl/rtl-page" />
   </Switch>
@@ -46,21 +43,18 @@ export default function RTL({ ...rest }) {
   // states and functions
   const [image] = React.useState(bgImage);
   const [color] = React.useState("blue");
-  //const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
-  };
+
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
     }
   };
-  // initialize and destroy the PerfectScrollbar plugin
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -78,6 +72,7 @@ export default function RTL({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -97,15 +92,12 @@ export default function RTL({ ...rest }) {
           rtlActive
           {...rest}
         />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
+        {
           <div className={classes.content}>
             <div className={classes.container}>{switchRoutes}</div>
           </div>
-        ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
-        {getRoute() ? <Footer /> : null}
+        }
+        {<Footer />}
       </div>
     </div>
   );

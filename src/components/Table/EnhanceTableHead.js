@@ -7,7 +7,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableHead from "@material-ui/core/TableHead";
 
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
-//import CustomInput from "components/CustomInput/CustomInput";
 
 import InputLabel from "@material-ui/core/InputLabel";
 

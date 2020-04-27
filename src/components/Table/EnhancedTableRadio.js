@@ -106,7 +106,7 @@ export default function EnhancedTableRadio(props) {
   const handleChangePage = (event, newPage) => {
     if (tableData.length <= newPage * rowsPerPage + 2 * rowsPerPage) {
       if (newPage * rowsPerPage < tableData.length) setPage(newPage);
-      /* if (tableNextToken) */ onGetMoreRows(false);
+      onGetMoreRows(false);
     } else setPage(newPage);
   };
 

@@ -1,7 +1,5 @@
 /*eslint-disable*/
-import React from "react";
-// react plugin for creating charts
-import ChartistGraph from "react-chartist";
+import React, { useEffect, useContext } from "react";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
@@ -13,8 +11,6 @@ import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
 import Tasks from "components/Tasks/Tasks.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
-import Danger from "components/Typography/Danger.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
@@ -31,66 +27,21 @@ import {API, graphqlOperation, Auth} from "aws-amplify"
 
 
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.js";
-
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 
-let bugs = [
-  " 1 בדיקה מספר",
-  "בדיקה מספר 2 ",
-  "בדיקה מספר 3",
-  "	בדיקה מספר 4"
-];
-let website = [
-  "بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته",
-  "اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید؟"
-];
-let server = [
-  "זהו סרוור 1",
-  "זהו סרוור 2",
-  "זהו סרוור 3",
-  "از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی ؟",
-  "از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند؟"
-];
+import { AuthContext } from '../../context/authContext';
+
+
 
 const useStyles = makeStyles(styles);
 
-async function getCourse (){
-
-  try {
-    const  courselist = await API.graphql(graphqlOperation(ListCourses))
-    console.log("lists", courselist)
-  } catch (error) {
-    console.log("error", error)
-  }
-
-  
-}
-
-async function getAuth (){
-
-  try {
-    const user = await Auth.currentAuthenticatedUser()
-    console.log('user:', user)
-    console.log('user info:', user.signInUserSession.idToken.payload)
-  } catch (error) {
-    console.log("error", error)
-  }
-}
-
 export default function RTLPage() {
 
-  //getAuth();
-  //getCourse();
-
-
-  
+   const {userInfo} = React.useContext(AuthContext);
+  console.log("context", userInfo) 
+ 
   const classes = useStyles();
   return (
     <div>

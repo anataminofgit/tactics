@@ -6,7 +6,7 @@ import Icon from "@material-ui/core/Icon";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Button from "components/CustomButtons/Button.js";
+//import Button from "components/CustomButtons/Button.js";
 
 // import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
@@ -15,7 +15,7 @@ import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 //import CardIcon from "components/Card/CardIcon.js";
 import ShoppingTable from "components/Table/ShoppingTable";
-import CardFooter from "components/Card/CardFooter.js";
+//import CardFooter from "components/Card/CardFooter.js";
 
 const useStyles = makeStyles(styles);
 
@@ -42,9 +42,6 @@ export default function ShoppingList() {
             />
           </CardBody>
         </Card>
-        <CardFooter>
-          <Button color="primary">Totals</Button>
-        </CardFooter>
       </GridItem>
     </GridContainer>
   );

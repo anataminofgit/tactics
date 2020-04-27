@@ -5,61 +5,26 @@ import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
 
 let courseFilter = null;
 let coursesNextToken = null;
-let localArray = [];
-/* export async function queryCreateCourse() {
-  try {
-    const newCourseData = await API.graphql(
-      graphqlOperation(createCourse, {
-        input: {
-          title: course.title,
-          teacherName: course.teacherName,
-          queryName: "Course",
-          startAt: course.startAt
-        }
-      })
-    );
 
-    const { id, startAt, title, teacherName } = newCourseData.data.createCourse;
+export async function fetchFilterListCourseQuery(selectedIndex, fieldValue) {
+  const courseFilters = [
+    { title: { contains: fieldValue } },
+    { teacherName: { contains: fieldValue } },
+    { startAt: { contains: fieldValue } }
+  ];
 
-    return { id, title, teacherName, startAt };
-
- 
-  } catch (error) {
-    console.log("error - create", error);
-  }
-} */
-
-/* export async function queryUpdateCourse() {
-  try {
-    await API.graphql(
-      graphqlOperation(updateCourse, {
-        input: {
-          id: course.id,
-          title: course.title,
-          queryName: "Course",
-          teacherName: course.teacherName,
-          startAt: course.startAt
-        }
-      })
-    ); //
-
-    fetchListCourseQuery(true);
-  } catch (error) {
-    console.log("error - update", error);
-  }
+  courseFilter = selectedIndex ? courseFilters[selectedIndex] : null;
+  return fetchListCourseQuery(true, courseFilter);
 }
- */
-//export
+
 export async function fetchListCourseQuery(toRestart, filter) {
-  // let toRestart = restart;
   let count = 0;
   let localNextToken = coursesNextToken;
-  localArray = [];
+  let localArray = [];
   let toContinue = true;
 
   if (filter !== undefined) courseFilter = filter;
 
-  console.log("restart", toRestart, "courseFilter", courseFilter);
   if (coursesNextToken || toRestart) {
     while (toContinue) {
       try {
@@ -76,11 +41,12 @@ export async function fetchListCourseQuery(toRestart, filter) {
         localNextToken = response.data.courseByName.nextToken;
 
         const arr = data.map(function(item) {
+          const { id, title, teacherName, startAt } = item;
           return {
-            id: item.id,
-            title: item.title,
-            teacherName: item.teacherName,
-            startAt: item.startAt
+            id,
+            title,
+            teacherName,
+            startAt
           };
         });
         count = count + arr.length;
@@ -88,18 +54,9 @@ export async function fetchListCourseQuery(toRestart, filter) {
         localArray = [...localArray, ...arr];
         toRestart = false;
         if (localNextToken === null || count > 9) {
-          console.log("localNextToken", localNextToken, "count", count);
           toContinue = false;
         }
         coursesNextToken = localNextToken;
-        console.log(
-          "next tiken1",
-          count,
-          coursesNextToken,
-          localArray
-        ); /* if (restart) setTable(localArray);
-        else setTable([...table, ...localArray]);
- */
       } catch (error) {
         console.log("error - fetchListCourseQuery", error);
         return [];
@@ -110,15 +67,7 @@ export async function fetchListCourseQuery(toRestart, filter) {
   console.log("restart", toRestart, "nexttoken", coursesNextToken);
 }
 
-/* export async function queryFilterSearch ()
-    const courseFilters = [
-      { title: { contains: fieldValue } },
-      { teacherName: { contains: fieldValue } },
-      { startAt: { contains: fieldValue } }
-    ];
-
-  };
-
+/* 
  export async function querySelectedRow = async rowId => {
     try {
       const response = await API.graphql(
@@ -140,4 +89,5 @@ export async function fetchListCourseQuery(toRestart, filter) {
     }
   };
 
-*/
+
+ */
