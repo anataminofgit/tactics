@@ -1,6 +1,4 @@
-/* eslint-disable */
 // this is an auto generated file. This will be overwritten
-
 
 export const listCoursesHeaders = /* GraphQL */ `
   query ListCourses(
@@ -20,7 +18,6 @@ export const listCoursesHeaders = /* GraphQL */ `
   }
 `;
 
-
 export const getCourse = /* GraphQL */ `
   query GetCourse($title: String!, $teacherName: String!, $startAt: AWSDate!) {
     getCourse(title: $title, teacherName: $teacherName, startAt: $startAt) {
@@ -33,9 +30,8 @@ export const getCourse = /* GraphQL */ `
   }
 `;
 
-
-export const courseByName = /* GraphQL */ `
-  query CourseByName(
+export const coursesByName = /* GraphQL */ `
+  query CoursesByName(
     $queryName: String
     $title: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -43,7 +39,7 @@ export const courseByName = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    courseByName(
+    coursesByName(
       queryName: $queryName
       title: $title
       sortDirection: $sortDirection
@@ -57,7 +53,7 @@ export const courseByName = /* GraphQL */ `
         title
         teacherName
         startAt
-        teacherEmail 
+        teacherEmail
       }
       nextToken
     }

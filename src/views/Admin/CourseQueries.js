@@ -1,4 +1,4 @@
-import { courseByName } from "../../graphql/queries";
+import { coursesByName } from "../../graphql/queries2";
 //import { getCourse } from "../../graphql/queries";
 //import { createCourse, updateCourse } from "../../graphql/mutations";
 import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
@@ -29,7 +29,7 @@ export async function fetchListCourseQuery(toRestart, filter) {
     while (toContinue) {
       try {
         const response = await API.graphql(
-          graphqlOperation(courseByName, {
+          graphqlOperation(coursesByName, {
             queryName: "Course",
             sortDirection: "ASC",
             nextToken: toRestart ? null : localNextToken,
@@ -37,8 +37,8 @@ export async function fetchListCourseQuery(toRestart, filter) {
           })
         );
 
-        const data = response.data.courseByName.items;
-        localNextToken = response.data.courseByName.nextToken;
+        const data = response.data.coursesByName.items;
+        localNextToken = response.data.coursesByName.nextToken;
 
         const arr = data.map(function(item) {
           const { id, title, teacherName, startAt } = item;
