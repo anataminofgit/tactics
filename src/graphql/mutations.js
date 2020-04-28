@@ -17,6 +17,7 @@ export const createCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -79,6 +80,7 @@ export const updateCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -141,6 +143,7 @@ export const deleteCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -567,6 +570,7 @@ export const createStudent = /* GraphQL */ `
     createStudent(input: $input, condition: $condition) {
       id
       name
+      queryName
       address
       phone
       email
@@ -612,6 +616,7 @@ export const updateStudent = /* GraphQL */ `
     updateStudent(input: $input, condition: $condition) {
       id
       name
+      queryName
       address
       phone
       email
@@ -657,6 +662,7 @@ export const deleteStudent = /* GraphQL */ `
     deleteStudent(input: $input, condition: $condition) {
       id
       name
+      queryName
       address
       phone
       email

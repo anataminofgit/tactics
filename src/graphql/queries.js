@@ -14,6 +14,7 @@ export const getCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -78,6 +79,7 @@ export const listCourses = /* GraphQL */ `
           items {
             id
             name
+            queryName
             address
             phone
             email
@@ -343,6 +345,7 @@ export const getStudent = /* GraphQL */ `
     getStudent(id: $id) {
       id
       name
+      queryName
       address
       phone
       email
@@ -390,6 +393,7 @@ export const listStudents = /* GraphQL */ `
       items {
         id
         name
+        queryName
         address
         phone
         email
@@ -415,8 +419,8 @@ export const listStudents = /* GraphQL */ `
     }
   }
 `;
-export const courseByName = /* GraphQL */ `
-  query CourseByName(
+export const coursesByName = /* GraphQL */ `
+  query CoursesByName(
     $queryName: String
     $title: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -424,7 +428,7 @@ export const courseByName = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    courseByName(
+    coursesByName(
       queryName: $queryName
       title: $title
       sortDirection: $sortDirection
@@ -443,6 +447,7 @@ export const courseByName = /* GraphQL */ `
           items {
             id
             name
+            queryName
             address
             phone
             email
@@ -475,8 +480,8 @@ export const courseByName = /* GraphQL */ `
     }
   }
 `;
-export const productByName = /* GraphQL */ `
-  query ProductByName(
+export const productsByName = /* GraphQL */ `
+  query ProductsByName(
     $queryName: String
     $name: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -484,7 +489,7 @@ export const productByName = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    productByName(
+    productsByName(
       queryName: $queryName
       name: $name
       sortDirection: $sortDirection
@@ -510,6 +515,52 @@ export const productByName = /* GraphQL */ `
         }
         name
         price
+      }
+      nextToken
+    }
+  }
+`;
+export const studentsByName = /* GraphQL */ `
+  query StudentsByName(
+    $queryName: String
+    $name: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStudentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    studentsByName(
+      queryName: $queryName
+      name: $name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        queryName
+        address
+        phone
+        email
+        courseID
+        tasks {
+          items {
+            id
+            uploadPath
+            taskID
+          }
+          nextToken
+        }
+        studentProducts {
+          items {
+            id
+            studentID
+            quantity
+          }
+          nextToken
+        }
       }
       nextToken
     }

@@ -14,6 +14,7 @@ export const onCreateCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -73,6 +74,7 @@ export const onUpdateCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -132,6 +134,7 @@ export const onDeleteCourse = /* GraphQL */ `
         items {
           id
           name
+          queryName
           address
           phone
           email
@@ -519,6 +522,7 @@ export const onCreateStudent = /* GraphQL */ `
     onCreateStudent {
       id
       name
+      queryName
       address
       phone
       email
@@ -561,6 +565,7 @@ export const onUpdateStudent = /* GraphQL */ `
     onUpdateStudent {
       id
       name
+      queryName
       address
       phone
       email
@@ -603,6 +608,7 @@ export const onDeleteStudent = /* GraphQL */ `
     onDeleteStudent {
       id
       name
+      queryName
       address
       phone
       email

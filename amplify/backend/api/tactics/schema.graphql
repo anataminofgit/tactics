@@ -68,7 +68,6 @@ type StudentProduct
 type Student @model 
  @key(name: "byStudentCourse", fields: ["courseID"])
  @key(name: "queryName", fields:["queryName", "name"], queryField: "studentsByName" ) 
-queryName: 
 {
   id: ID!
   name: String!
