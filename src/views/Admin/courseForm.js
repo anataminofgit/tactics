@@ -50,8 +50,6 @@ export default function CourseForm(props) {
   const classes = useStyles();
   const { updateCourse, createCourse, selcetedCourseInput } = props;
 
-  //console.log("selcetedCourseInput", selcetedCourseInput);
-
   const [inputValues, setInputValues] = useState(selcetedCourseInput);
 
   const onUpdateCourse = () => {

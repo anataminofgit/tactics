@@ -64,7 +64,6 @@ export async function fetchListCourseQuery(toRestart, filter) {
     }
     return localArray;
   }
-  console.log("restart", toRestart, "nexttoken", coursesNextToken);
 }
 
 /* 

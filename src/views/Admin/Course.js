@@ -30,7 +30,6 @@ export default function Course() {
 
   const useStyles = makeStyles(styles);
   const classes = useStyles();
-
   const headCells = [
     {
       id: "id",
@@ -61,6 +60,8 @@ export default function Course() {
       toSort: false
     }
   ];
+  const label = headCells[1].label; //title
+  const filterItems = ["שם הקורס", "שם המדריך", "התחלת הקורס"];
 
   const handleCreateCourse = async course => {
     try {
@@ -170,17 +171,12 @@ export default function Course() {
   const handleFetchListCourseQuery = () => {
     fetchListCourseQuery(false)
       .then(value => {
-        console.log(value);
         if (value) setTable([...table, ...value]);
       })
       .catch(err => {
         console.log("err use effect", err);
       });
   };
-
-  const label = headCells[1].label;
-
-  const filterItems = ["שם הקורס", "שם המדריך", "התחלת הקורס"];
 
   return (
     <GridContainer>

@@ -2,8 +2,6 @@
 import React, { useContext} from "react";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
 // core components
 import Button from "components/CustomButtons/Button.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -23,20 +21,15 @@ import  Notifications from "../Notifications/Notifications"
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 const useStyles = makeStyles(styles);
 
-import avatar from "assets/img/faces/marc.jpg";
-
 
 
 async function getCourse (){
-
   try {
     const  courselist = await API.graphql(graphqlOperation(ListCourses))
     console.log("lists", courselist)
   } catch (error) {
     console.log("error", error)
   }
-
-  
 }
 
 
@@ -71,12 +64,9 @@ export default function Admin() {
           </Card>
         </GridItem>
       </GridContainer>
-
-
       <GridContainer>
        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            
+          <Card>           
             <CardHeader color="warning">
               <h4 className={classes.cardTitleWhite}>כותרת של כרטיס 1</h4>
               <p className={classes.cardCategoryWhite}>
