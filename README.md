@@ -2,9 +2,10 @@
 ![Product Gif](src/assets/github/project.gif)
 
 ## tecnologies
+Client:
 - React, ReactHooks, Context
-- AWS amplify, AWS AppSync, AWS DynamoDB, Amazon Cognito
 - https://material-ui.com/
-- based on free code : https://demos.creative-tim.com/material-dashboard-react
+- UI based on free code : https://demos.creative-tim.com/material-dashboard-react
+Server:
+- AWS amplify, AWS AppSync, GraphQL, AWS DynamoDB, Amazon Cognito
 
--
