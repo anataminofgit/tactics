@@ -36,6 +36,7 @@ import ShoppingList from "views/TableList/ShoppingList.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 import Admin from "views/Admin/Admin.js";
+import Teacher from "views/Teacher/Teacher.js";
 
 const dashboardRoutes = [
   {
@@ -55,11 +56,19 @@ const dashboardRoutes = [
     layout: "/rtl"
   },
   {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "מדריך",
+    path: "/Admin",
+    name: "Admin",
+    rtlName: "Admin",
     icon: Person,
     component: Admin,
+    layout: "/rtl"
+  },
+  {
+    path: "/Teacher",
+    name: "Teacher",
+    rtlName: "מדריך",
+    icon: Person,
+    component: Teacher,
     layout: "/rtl"
   }
 ];

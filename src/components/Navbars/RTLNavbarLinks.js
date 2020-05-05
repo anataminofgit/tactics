@@ -32,7 +32,7 @@ export default function RTLNavbarLinks() {
   const logOut = () => {
     Auth.signOut()
       .then(data => console.log(data))
-      .catch(err => console.log(err));
+      .catch(err => console.log("err - logout", err));
   };
 
   const handleClose = () => {

@@ -40,20 +40,19 @@ const styles = {
   }
 };
 
-export default function CourseForm(props) {
+export default function TaskForm(props) {
   const useStyles = makeStyles(styles);
 
   const classes = useStyles();
-  const { updateCourse, createCourse, selcetedCourseInput } = props;
+  const { updateTask, createTask, selcetedTaskInput } = props;
+  const [inputValues, setInputValues] = useState(selcetedTaskInput);
 
-  const [inputValues, setInputValues] = useState(selcetedCourseInput);
-
-  const onUpdateCourse = () => {
-    updateCourse(inputValues);
+  const onUpdateTask = () => {
+    updateTask(inputValues);
   };
 
-  const onCreateCourse = () => {
-    createCourse(inputValues);
+  const onCreateTask = () => {
+    createTask(inputValues);
   };
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -67,21 +66,20 @@ export default function CourseForm(props) {
 
   useEffect(() => {
     setInputValues({
-      id: selcetedCourseInput.id,
-      title: selcetedCourseInput.title,
-      startAt: selcetedCourseInput.startAt,
-      teacherName: selcetedCourseInput.teacherName,
-      teacherEmail: selcetedCourseInput.teacherEmail
+      id: selcetedTaskInput.id,
+      taskTitle: selcetedTaskInput.taskTitle,
+      taskContent: selcetedTaskInput.taskContent,
+      toUpload: selcetedTaskInput.toUpload
     });
-  }, [selcetedCourseInput]);
+  }, [selcetedTaskInput]);
 
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}> יצירה/עדכון קורס</h4>
-            <p className={classes.cardCategoryWhite}>פרטי הקורס</p>
+            <h4 className={classes.cardTitleWhite}> משימה/הודעה</h4>
+            <p className={classes.cardCategoryWhite}>פרטי המשימה/ההודעה</p>
           </CardHeader>
           <CardBody>
             <GridContainer>
@@ -101,48 +99,48 @@ export default function CourseForm(props) {
               </GridItem>
             </GridContainer>
             <GridContainer>
-              <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                  labelText="שם הקורס"
-                  id="course name"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    onChange: handleInputChange,
-                    value: inputValues.title || "",
-                    name: "title"
-                  }}
-                />
-              </GridItem>
-            </GridContainer>
-            <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
-                  labelText="שם המדריך"
-                  id="teacher rname"
+                  labelText="כותרת משימה"
+                  id="taskTitle"
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
                     onChange: handleInputChange,
-                    value: inputValues.teacherName,
-                    name: "teacherName"
+                    value: inputValues.taskTitle || "",
+                    name: "taskTitle"
                   }}
                 />
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                   onChange={handleInputChange}
-                  labelText="כתובת Email של המדריך"
-                  id="teacher-email-address"
+                  labelText="  האם יש צורך בתשובה "
+                  id="toUpload"
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
                     onChange: handleInputChange,
-                    value: inputValues.teacherEmail || "",
-                    name: "teacherEmail"
+                    value: "",
+                    name: "toUpload"
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+                <CustomInput
+                  labelText="תוכן"
+                  id="taskContent"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    onChange: handleInputChange,
+                    value: inputValues.taskContent || "",
+                    name: "taskContent"
                   }}
                 />
               </GridItem>
@@ -152,7 +150,7 @@ export default function CourseForm(props) {
                 <FormControl>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                      label="Start Date of Course"
+                      label="Due Date"
                       placeholder="31/10/20"
                       value={inputValues.startAt || Date()}
                       onChange={date => handleDateChange(date)}
@@ -165,33 +163,24 @@ export default function CourseForm(props) {
           </CardBody>
           <CardFooter>
             <Button
-              onClick={onCreateCourse}
-              disabled={
-                !(
-                  inputValues.title &&
-                  inputValues.teacherName &&
-                  inputValues.teacherEmail &&
-                  inputValues.startAt
-                )
-              }
+              onClick={onCreateTask}
+              disabled={!(inputValues.taskTitle && inputValues.taskContent)}
               color="primary"
             >
-              יצירה קורס חדש
+              יצירה משימה/הודעה חדשה
             </Button>
             <Button
-              onClick={onUpdateCourse}
+              onClick={onUpdateTask}
               disabled={
                 !(
                   inputValues.id &&
-                  inputValues.title &&
-                  inputValues.teacherName &&
-                  inputValues.teacherEmail &&
-                  inputValues.startAt
+                  inputValues.taskTitle &&
+                  inputValues.taskContent
                 )
               }
               color="primary"
             >
-              עדכון קורס קיים
+              עדכון משימה/הודעה קיימת
             </Button>
           </CardFooter>
         </Card>
@@ -200,9 +189,9 @@ export default function CourseForm(props) {
   );
 }
 
-CourseForm.propTypes = {
-  createCourse: PropTypes.func.isRequired,
-  updateCourse: PropTypes.func.isRequired,
-  // deleteCourse: PropTypes.func.isRequired,
-  selcetedCourseInput: PropTypes.object.isRequired
+TaskForm.propTypes = {
+  createTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  // deleteTask: PropTypes.func.isRequired,
+  selcetedTaskInput: PropTypes.object.isRequired
 };

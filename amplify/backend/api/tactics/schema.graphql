@@ -18,12 +18,14 @@ type Course @model
 
 type TaskWithAnswer
 @model
-@key(name: "byTaskStudent", fields: ["taskID"])
+@key(name: "byTaskWIthAnswerStudent", fields: ["studentID"])
+#@key(name: "byTaskWithAnswer", fields: ["taskID"])
 {
 id : ID!
-task : Task @connection(name: "byTaskStudent")
 uploadPath: String
-taskID : ID
+studentID : ID
+#taskID : ID
+task : Task @connection(name: "byTaskWithAnswer")
 }
 
 
@@ -33,24 +35,25 @@ type Task
   {
   id: ID!
   courseID: ID!
-  title: String!
-  content : String
+  taskWithAnswer: TaskWithAnswer  @connection(name: "byTaskWithAnswer")
+  taskTitle: String!
+  taskContent : String
   toUpload: Boolean!
-  taskWithAnswer: TaskWithAnswer @connection(name: "byTaskStudent")
+
 }
 
 type Product
   @model
   @key(name: "byCourse", fields: ["courseID"])
-  @key(name: "queryName", fields:["queryName", "name"], queryField: "productsByName" ) 
+  @key(name: "queryName", fields:["queryName", "productName"], queryField: "productsByName" ) 
 
 {
   id: ID!
   courseID: ID
   queryName:String!
   studentInfo: StudentProduct @connection(name: "byStudent")
-  name: String
-  price: Int
+  productName: String
+  productPrice: Int
 
 }
 type StudentProduct
@@ -76,7 +79,7 @@ type Student @model
   phone: AWSPhone
   email : String!
   courseID :ID
-  tasks: [TaskWithAnswer] @connection(keyName: "byTaskStudent", fields: ["id"])
+  taskswithAndwer: [TaskWithAnswer] @connection(keyName: "byTaskWIthAnswerStudent", fields: ["id"])
   studentProducts: [StudentProduct] @connection(keyName: "byStudent", fields: ["id"])
 }
 

@@ -10,90 +10,27 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import Course from "./Course"
-import {listCourses as ListCourses} from "../../graphql/queries"
+import Courses from "./Courses"
+import Students from "./Students"
 
-import {API, graphqlOperation, Auth} from "aws-amplify"
-
+//import AsyncAutoComplete from "../../components/CustomInput/asyncAutocomplete"
 import  Notifications from "../Notifications/Notifications"
-
+//import {fetchAllCourseQuery} from "./CourseQueries"
 
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 const useStyles = makeStyles(styles);
 
 
 
-async function getCourse (){
-  try {
-    const  courselist = await API.graphql(graphqlOperation(ListCourses))
-    console.log("lists", courselist)
-  } catch (error) {
-    console.log("error", error)
-  }
-}
-
 
 
 export default function Admin() {
   const classes = useStyles();
+
   return (
     <div>
-
-    <Course/>
-
-     <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card >
-          <CardHeader color="success">
-              <h4 className={classes.cardTitleWhite}> משימה</h4>
-            </CardHeader>
-            <CardBody  >
-              <h4 className={classes.cardTitle}> משימה חגיגית לרגל יום הכרישים!</h4>
-              <p  className={classes.description}>
-                תאריך התחלה: 19/2/2020  <br/>
-                תאריך סיום: 26/3/2020<br/>
-                פרס: 100 טינקלים<br/>
-                בונוס: 80 טינקלים<br/>
-                העלו תמונה של הקוד שכתבתם, או תמונה של ההמצאה שאתם בונים, או גם וגם. אם ההמצאה שלכם עוד לא מוכנה, העלו תמונה של הקוד ובהמשך, העלו את התמונה הנוספת :)
-                על התמונות להיות באיכות טובה ומצולמות באור ומקרוב. על כל תמונה תקבלו 50 טינקלים.
-              </p>
-              <Button color="success" round>
-                העלאת קובץ....
-              </Button>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
-      <GridContainer>
-       <GridItem xs={12} sm={12} md={12}>
-          <Card>           
-            <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>כותרת של כרטיס 1</h4>
-              <p className={classes.cardCategoryWhite}>
-              </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["کد", "نام", "حقوق", "استان"]}
-                tableData={[
-                  ["1", " זה עולה כך וכך", "$36,738", "مازندران"],
-                  ["2", "مینا رضایی	", "$23,789", "گلستان"],
-                  ["3", "مبینا احمدپور	", "$56,142", "تهران"],
-                  ["4", "جلال آقایی	", "$38,735", "شهرکرد"]
-                ]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
- 
-
-
-      <GridContainer>
-      <Notifications></Notifications>
-      </GridContainer>
-
+    <Courses/>
+    <Students/>
     </div>
   );
 }

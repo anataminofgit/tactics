@@ -18,7 +18,6 @@ const AuthContextProvider = props => {
   async function getAuth() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      // console.log("user:", user);
       const groups = user.signInUserSession.idToken.payload["cognito:groups"];
       const { email } = user.signInUserSession.idToken.payload;
 
@@ -26,7 +25,7 @@ const AuthContextProvider = props => {
 
       return { email: email, authGroup: groups };
     } catch (error) {
-      console.log("error", error);
+      console.log("error - getAuth", error);
     }
   }
 

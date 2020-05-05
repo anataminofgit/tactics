@@ -13,40 +13,6 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Radio from "@material-ui/core/Radio";
 import EnhancedTableHead from "./EnhanceTableHead";
-//import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
-//const useStyles = makeStyles(styles);
-
-/* function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-} */
-/* function getComparator(order, orderBy) {
-  //console.log("getComparator", order, orderBy);
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-} */
-
-/* function stableSort(array, comparator) {
-  //console.log("stableSort array", array);
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  //console.log("stableSort stabilizedThis", stabilizedThis);
-
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    //console.log("stableSort", order, a[0], b[0]);
-
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
- */
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
@@ -98,7 +64,6 @@ export default function EnhancedTableRadio(props) {
   const handleClick = (event, id) => {
     const newSelected = id;
 
-    //console.log("handleClick", id);
     setSelected(newSelected);
     onSelectedRow(id);
   };
@@ -123,7 +88,6 @@ export default function EnhancedTableRadio(props) {
 
   const renderCell = row => {
     return tableHead.map((item, index) => {
-      //console.log(" {row[item.id]}", item.id, row[item.id]);
 
       if (item.label !== null)
         return (
@@ -134,7 +98,6 @@ export default function EnhancedTableRadio(props) {
       return null;
     });
   };
-  //console.log( " length and page" ,tableData.length, (page * rowsPerPage))
 
   if (tableData.length < page * rowsPerPage) setPage(0);
 

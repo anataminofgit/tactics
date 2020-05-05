@@ -1,8 +1,8 @@
 ## [Start] Set query expression for @key **
 #set( $modelQueryExpression = {} )
 ## [Start] Validate key arguments. **
-#if( !$util.isNull($ctx.args.name) && $util.isNull($ctx.args.queryName) )
-  $util.error("When providing argument 'name' you must also provide arguments queryName", "InvalidArgumentsError")
+#if( !$util.isNull($ctx.args.productName) && $util.isNull($ctx.args.queryName) )
+  $util.error("When providing argument 'productName' you must also provide arguments queryName", "InvalidArgumentsError")
 #end
 ## [End] Validate key arguments. **
 #if( !$util.isNull($ctx.args.queryName) )
@@ -17,41 +17,41 @@
 } )
 #end
 ## [Start] Applying Key Condition **
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.beginsWith) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.beginsWith) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND begins_with(#sortKey, :sortKey)" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.beginsWith" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.beginsWith" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.between) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.between) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey0", { "S": "$ctx.args.name.between[0]" }))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey1", { "S": "$ctx.args.name.between[1]" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey0", { "S": "$ctx.args.productName.between[0]" }))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey1", { "S": "$ctx.args.productName.between[1]" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.eq) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.eq) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey = :sortKey" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.eq" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.eq" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.lt) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.lt) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey < :sortKey" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.lt" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.lt" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.le) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.le) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey <= :sortKey" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.le" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.le" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.gt) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.gt) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey > :sortKey" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.gt" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.gt" }))
 #end
-#if( !$util.isNull($ctx.args.name) && !$util.isNull($ctx.args.name.ge) )
+#if( !$util.isNull($ctx.args.productName) && !$util.isNull($ctx.args.productName.ge) )
   #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey >= :sortKey" )
-  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "name"))
-  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.name.ge" }))
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "productName"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.productName.ge" }))
 #end
 ## [End] Applying Key Condition **
 ## [End] Set query expression for @key **

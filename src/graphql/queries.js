@@ -19,7 +19,7 @@ export const getCourse = /* GraphQL */ `
           phone
           email
           courseID
-          tasks {
+          taskswithAndwer {
             nextToken
           }
           studentProducts {
@@ -32,14 +32,14 @@ export const getCourse = /* GraphQL */ `
         items {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
         nextToken
       }
@@ -53,8 +53,8 @@ export const getCourse = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         nextToken
       }
@@ -91,8 +91,8 @@ export const listCourses = /* GraphQL */ `
           items {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
           nextToken
@@ -102,8 +102,8 @@ export const listCourses = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           nextToken
         }
@@ -116,27 +116,27 @@ export const getTaskWithAnswer = /* GraphQL */ `
   query GetTaskWithAnswer($id: ID!) {
     getTaskWithAnswer(id: $id) {
       id
+      uploadPath
+      studentID
       task {
         id
         courseID
-        title
-        content
-        toUpload
         taskWithAnswer {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
+        taskTitle
+        taskContent
+        toUpload
       }
-      uploadPath
-      taskID
     }
   }
 `;
@@ -149,20 +149,20 @@ export const listTaskWithAnswers = /* GraphQL */ `
     listTaskWithAnswers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        uploadPath
+        studentID
         task {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
-        uploadPath
-        taskID
       }
       nextToken
     }
@@ -173,26 +173,26 @@ export const getTask = /* GraphQL */ `
     getTask(id: $id) {
       id
       courseID
-      title
-      content
-      toUpload
       taskWithAnswer {
         id
+        uploadPath
+        studentID
         task {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
-        uploadPath
-        taskID
       }
+      taskTitle
+      taskContent
+      toUpload
     }
   }
 `;
@@ -206,21 +206,21 @@ export const listTasks = /* GraphQL */ `
       items {
         id
         courseID
-        title
-        content
-        toUpload
         taskWithAnswer {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
+        taskTitle
+        taskContent
+        toUpload
       }
       nextToken
     }
@@ -244,13 +244,13 @@ export const getProduct = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         quantity
       }
-      name
-      price
+      productName
+      productPrice
     }
   }
 `;
@@ -272,13 +272,13 @@ export const listProducts = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       nextToken
     }
@@ -300,13 +300,13 @@ export const getStudentProduct = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       quantity
     }
@@ -331,8 +331,8 @@ export const listStudentProducts = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         quantity
       }
@@ -350,18 +350,18 @@ export const getStudent = /* GraphQL */ `
       phone
       email
       courseID
-      tasks {
+      taskswithAndwer {
         items {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
         nextToken
       }
@@ -373,8 +373,8 @@ export const getStudent = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
@@ -398,11 +398,11 @@ export const listStudents = /* GraphQL */ `
         phone
         email
         courseID
-        tasks {
+        taskswithAndwer {
           items {
             id
             uploadPath
-            taskID
+            studentID
           }
           nextToken
         }
@@ -459,8 +459,8 @@ export const coursesByName = /* GraphQL */ `
           items {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
           nextToken
@@ -470,8 +470,8 @@ export const coursesByName = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           nextToken
         }
@@ -483,7 +483,7 @@ export const coursesByName = /* GraphQL */ `
 export const productsByName = /* GraphQL */ `
   query ProductsByName(
     $queryName: String
-    $name: ModelStringKeyConditionInput
+    $productName: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelProductFilterInput
     $limit: Int
@@ -491,7 +491,7 @@ export const productsByName = /* GraphQL */ `
   ) {
     productsByName(
       queryName: $queryName
-      name: $name
+      productName: $productName
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -508,13 +508,13 @@ export const productsByName = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       nextToken
     }
@@ -545,11 +545,11 @@ export const studentsByName = /* GraphQL */ `
         phone
         email
         courseID
-        tasks {
+        taskswithAndwer {
           items {
             id
             uploadPath
-            taskID
+            studentID
           }
           nextToken
         }

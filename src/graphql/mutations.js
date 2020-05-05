@@ -22,7 +22,7 @@ export const createCourse = /* GraphQL */ `
           phone
           email
           courseID
-          tasks {
+          taskswithAndwer {
             nextToken
           }
           studentProducts {
@@ -35,14 +35,14 @@ export const createCourse = /* GraphQL */ `
         items {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
         nextToken
       }
@@ -56,8 +56,8 @@ export const createCourse = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         nextToken
       }
@@ -85,7 +85,7 @@ export const updateCourse = /* GraphQL */ `
           phone
           email
           courseID
-          tasks {
+          taskswithAndwer {
             nextToken
           }
           studentProducts {
@@ -98,14 +98,14 @@ export const updateCourse = /* GraphQL */ `
         items {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
         nextToken
       }
@@ -119,8 +119,8 @@ export const updateCourse = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         nextToken
       }
@@ -148,7 +148,7 @@ export const deleteCourse = /* GraphQL */ `
           phone
           email
           courseID
-          tasks {
+          taskswithAndwer {
             nextToken
           }
           studentProducts {
@@ -161,14 +161,14 @@ export const deleteCourse = /* GraphQL */ `
         items {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
         nextToken
       }
@@ -182,8 +182,8 @@ export const deleteCourse = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         nextToken
       }
@@ -197,27 +197,27 @@ export const createTaskWithAnswer = /* GraphQL */ `
   ) {
     createTaskWithAnswer(input: $input, condition: $condition) {
       id
+      uploadPath
+      studentID
       task {
         id
         courseID
-        title
-        content
-        toUpload
         taskWithAnswer {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
+        taskTitle
+        taskContent
+        toUpload
       }
-      uploadPath
-      taskID
     }
   }
 `;
@@ -228,27 +228,27 @@ export const updateTaskWithAnswer = /* GraphQL */ `
   ) {
     updateTaskWithAnswer(input: $input, condition: $condition) {
       id
+      uploadPath
+      studentID
       task {
         id
         courseID
-        title
-        content
-        toUpload
         taskWithAnswer {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
+        taskTitle
+        taskContent
+        toUpload
       }
-      uploadPath
-      taskID
     }
   }
 `;
@@ -259,27 +259,27 @@ export const deleteTaskWithAnswer = /* GraphQL */ `
   ) {
     deleteTaskWithAnswer(input: $input, condition: $condition) {
       id
+      uploadPath
+      studentID
       task {
         id
         courseID
-        title
-        content
-        toUpload
         taskWithAnswer {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
+        taskTitle
+        taskContent
+        toUpload
       }
-      uploadPath
-      taskID
     }
   }
 `;
@@ -291,26 +291,26 @@ export const createTask = /* GraphQL */ `
     createTask(input: $input, condition: $condition) {
       id
       courseID
-      title
-      content
-      toUpload
       taskWithAnswer {
         id
+        uploadPath
+        studentID
         task {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
-        uploadPath
-        taskID
       }
+      taskTitle
+      taskContent
+      toUpload
     }
   }
 `;
@@ -322,26 +322,26 @@ export const updateTask = /* GraphQL */ `
     updateTask(input: $input, condition: $condition) {
       id
       courseID
-      title
-      content
-      toUpload
       taskWithAnswer {
         id
+        uploadPath
+        studentID
         task {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
-        uploadPath
-        taskID
       }
+      taskTitle
+      taskContent
+      toUpload
     }
   }
 `;
@@ -353,26 +353,26 @@ export const deleteTask = /* GraphQL */ `
     deleteTask(input: $input, condition: $condition) {
       id
       courseID
-      title
-      content
-      toUpload
       taskWithAnswer {
         id
+        uploadPath
+        studentID
         task {
           id
           courseID
-          title
-          content
-          toUpload
           taskWithAnswer {
             id
             uploadPath
-            taskID
+            studentID
           }
+          taskTitle
+          taskContent
+          toUpload
         }
-        uploadPath
-        taskID
       }
+      taskTitle
+      taskContent
+      toUpload
     }
   }
 `;
@@ -397,13 +397,13 @@ export const createProduct = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         quantity
       }
-      name
-      price
+      productName
+      productPrice
     }
   }
 `;
@@ -428,13 +428,13 @@ export const updateProduct = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         quantity
       }
-      name
-      price
+      productName
+      productPrice
     }
   }
 `;
@@ -459,13 +459,13 @@ export const deleteProduct = /* GraphQL */ `
             studentID
             quantity
           }
-          name
-          price
+          productName
+          productPrice
         }
         quantity
       }
-      name
-      price
+      productName
+      productPrice
     }
   }
 `;
@@ -488,13 +488,13 @@ export const createStudentProduct = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       quantity
     }
@@ -519,13 +519,13 @@ export const updateStudentProduct = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       quantity
     }
@@ -550,13 +550,13 @@ export const deleteStudentProduct = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
-        name
-        price
+        productName
+        productPrice
       }
       quantity
     }
@@ -575,18 +575,18 @@ export const createStudent = /* GraphQL */ `
       phone
       email
       courseID
-      tasks {
+      taskswithAndwer {
         items {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
         nextToken
       }
@@ -598,8 +598,8 @@ export const createStudent = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
@@ -621,18 +621,18 @@ export const updateStudent = /* GraphQL */ `
       phone
       email
       courseID
-      tasks {
+      taskswithAndwer {
         items {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
         nextToken
       }
@@ -644,8 +644,8 @@ export const updateStudent = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }
@@ -667,18 +667,18 @@ export const deleteStudent = /* GraphQL */ `
       phone
       email
       courseID
-      tasks {
+      taskswithAndwer {
         items {
           id
+          uploadPath
+          studentID
           task {
             id
             courseID
-            title
-            content
+            taskTitle
+            taskContent
             toUpload
           }
-          uploadPath
-          taskID
         }
         nextToken
       }
@@ -690,8 +690,8 @@ export const deleteStudent = /* GraphQL */ `
             id
             courseID
             queryName
-            name
-            price
+            productName
+            productPrice
           }
           quantity
         }

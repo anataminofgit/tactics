@@ -30,3 +30,69 @@ export const updateCourse = /* GraphQL */ `
     }
   }
 `;
+
+
+
+export const createStudent = /* GraphQL */ `
+  mutation CreateStudent(
+    $input: CreateStudentInput!
+    $condition: ModelStudentConditionInput
+  ) {
+    createStudent(input: $input, condition: $condition) {
+      id
+      name
+      queryName
+      address
+      phone
+      email
+      courseID
+    }
+  }
+`;
+export const updateStudent = /* GraphQL */ `
+  mutation UpdateStudent(
+    $input: UpdateStudentInput!
+    $condition: ModelStudentConditionInput
+  ) {
+    updateStudent(input: $input, condition: $condition) {
+      id
+      name
+      queryName
+      address
+      phone
+      email
+      courseID
+    }
+  }
+`;
+
+
+
+export const createTask = /* GraphQL */ `
+  mutation CreateTask(
+    $input: CreateTaskInput!
+    $condition: ModelTaskConditionInput
+  ) {
+    createTask(input: $input, condition: $condition) {
+      id
+      courseID
+      taskTitle
+      taskContent
+      toUpload
+    }
+  }
+`;
+export const updateTask = /* GraphQL */ `
+  mutation UpdateTask(
+    $input: UpdateTaskInput!
+    $condition: ModelTaskConditionInput
+  ) {
+    updateTask(input: $input, condition: $condition) {
+      id
+      courseID
+      taskTitle
+      taskContent
+      toUpload
+    }
+  }
+`;

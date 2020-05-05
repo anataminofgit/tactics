@@ -34,7 +34,7 @@ export default function ShoppingList() {
           </CardHeader>
           <CardBody>
             <ShoppingTable
-              tableHead={["שם הפריט", "מחיר בטינקלים", " מחיר", "סכום כולל"]}
+              tableHead={["שם הפריט", "מחיר בטינקלים", "כמות", "סכום כולל"]}
               tableHeaderColor="warning"
               products={["מברג", "ציריה", "בורג 5 ", "בורד 10"]}
               prices={[3, 5, 6, 2]}

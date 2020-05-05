@@ -2,7 +2,7 @@
 #set( $query = {
   "expression": "#partitionKey = :partitionKey",
   "expressionNames": {
-      "#partitionKey": "taskID"
+      "#partitionKey": "studentID"
   },
   "expressionValues": {
       ":partitionKey": {
@@ -34,5 +34,5 @@ $util.toJson($context.args.nextToken)
   #else
 null
   #end,
-  "index": "byTaskStudent"
+  "index": "byTaskWIthAnswerStudent"
 }

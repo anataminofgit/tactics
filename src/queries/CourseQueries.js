@@ -1,5 +1,5 @@
-import { coursesByName } from "../../graphql/queries2";
-//import { getCourse } from "../../graphql/queries";
+import { coursesByName } from "../graphql/queries2";
+import { getCourse } from "../graphql/queries2";
 //import { createCourse, updateCourse } from "../../graphql/mutations";
 import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
 
@@ -66,27 +66,59 @@ export async function fetchListCourseQuery(toRestart, filter) {
   }
 }
 
-/* 
- export async function querySelectedRow = async rowId => {
+export async function fetchAllCourseQuery() {
+  let nextToken = null;
+  let localArray = [];
+  let toContinue = true;
+
+  while (toContinue) {
+    try {
+      const response = await API.graphql(
+        graphqlOperation(coursesByName, {
+          queryName: "Course",
+          sortDirection: "ASC",
+          nextToken: nextToken
+        })
+      );
+      const data = response.data.coursesByName.items;
+      nextToken = response.data.coursesByName.nextToken;
+
+      const arr = data.map(function(item) {
+        const { id, title } = item;
+        return {
+          id,
+          title
+        };
+      });
+      localArray = [...localArray, ...arr];
+      if (nextToken === null) {
+        toContinue = false;
+      }
+    } catch (error) {
+      console.log("error - fetchListCourseQuery", error);
+      return [];
+    }
+  }
+  return localArray;
+}
+export async function fetchCoursebyIDQuery(rowId) {
+  if (rowId)
     try {
       const response = await API.graphql(
         graphqlOperation(getCourse, {
           id: rowId
         })
       );
-
       const data = response.data.getCourse;
-
-      setSelectedCourse({
+      return {
         id: data.id,
         title: data.title,
         teacherName: data.teacherName,
+        teacherEmail: data.teacherEmail,
         startAt: data.startAt
-      });
+      };
     } catch (error) {
-      console.log("error - fetchGetCourseQuery", error);
+      console.log("error - fetchCoursebyIDQuery", error);
+      return null;
     }
-  };
-
-
- */
+}

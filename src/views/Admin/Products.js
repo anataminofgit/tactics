@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -9,23 +8,25 @@ import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 import EnhancedTableRadio from "../../components/Table/EnhancedTableRadio";
 import CustomizedFilter from "components/Table/CustomizedFilter.js";
-import CourseForm from "./courseForm";
+import StudentForm from "./studentForm";
 
-import { getCourse } from "../../graphql/queries";
-import { createCourse, updateCourse } from "../../graphql/mutations";
-import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
+import { getStudent } from "../../graphql/queries2";
+import { createStudent, updateStudent } from "../../graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
 import {
-  fetchListCourseQuery,
-  fetchFilterListCourseQuery
-} from "./CourseQueries";
+  fetchListProductsQuery,
+  fetchFilterListProductsQuery
+} from "../../queries/StudentQueries";
 
-export default function Course() {
+export default function Products() {
   const [table, setTable] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState({
+  const [selectedStudent, setSelectedStudent] = useState({
     id: null,
-    titel: "",
-    teacherName: "",
-    startAt: ""
+    namde: "",
+    address: "",
+    phone: "",
+    email: "",
+    courseID: null
   });
 
   const useStyles = makeStyles(styles);
@@ -39,53 +40,50 @@ export default function Course() {
       toSort: false
     },
     {
-      id: "title",
+      id: "name",
       numeric: false,
       disablePadding: true,
-      label: "שם בקורס",
+      label: "שם התלמיד",
       toSort: true
     },
     {
-      id: "teacherName",
+      id: "email",
       numeric: false,
       disablePadding: true,
-      label: "שם המדריך",
-      toSort: false
-    },
-    {
-      id: "startAt",
-      numeric: true,
-      disablePadding: true,
-      label: "תאריך התחלה",
+      label: "כתובת דואר אלקטרוני ",
       toSort: false
     }
   ];
   const label = headCells[1].label; //title
-  const filterItems = ["שם הקורס", "שם המדריך", "התחלת הקורס"];
+  const filterItems = ["שם התלמיד", "כתובת מייל"];
 
-  const handleCreateCourse = async course => {
+  const handleCreateStudent = async (student, courseId) => {
     try {
-      const newCourseData = await API.graphql(
-        graphqlOperation(createCourse, {
+      const newStudentData = await API.graphql(
+        graphqlOperation(createStudent, {
           input: {
-            title: course.title,
-            teacherName: course.teacherName,
-            queryName: "Course",
-            startAt: course.startAt
+            name: student.name,
+            phone: student.phone,
+            address: student.address,
+            queryName: "Student",
+            email: student.email,
+            courseID: courseId
           }
         })
       );
 
       const {
         id,
-        startAt,
-        title,
-        teacherName
-      } = newCourseData.data.createCourse;
+        name,
+        address,
+        phone,
+        email,
+        courseID
+      } = newStudentData.data.createStudent;
 
-      setSelectedCourse({ id, title, teacherName, startAt });
+      setSelectedStudent({ id, name, address, phone, email, courseID });
 
-      fetchListCourseQuery(true)
+      fetchListProductsQuery(true)
         .then(value => {
           setTable([...value]);
         })
@@ -93,24 +91,26 @@ export default function Course() {
           console.log("err use effect", err);
         });
     } catch (error) {
-      console.log("error - create", error);
+      console.log("error - create student", error);
     }
   };
 
-  const handleUpdateCourse = async course => {
+  const handleUpdateStudent = async (Student, courseId) => {
     try {
       await API.graphql(
-        graphqlOperation(updateCourse, {
+        graphqlOperation(updateStudent, {
           input: {
-            id: course.id,
-            title: course.title,
-            queryName: "Course",
-            teacherName: course.teacherName,
-            startAt: course.startAt
+            id: Student.id,
+            name: Student.name,
+            queryName: "Student",
+            phone: Student.phone,
+            address: Student.address,
+            email: Student.email,
+            courseID: courseId
           }
         })
       );
-      fetchListCourseQuery(true)
+      fetchListProductsQuery(true)
         .then(value => {
           setTable([...value]);
         })
@@ -118,12 +118,12 @@ export default function Course() {
           console.log("err use effect", err);
         });
     } catch (error) {
-      console.log("error - update", error);
+      console.log("error - update student", error);
     }
   };
 
   useEffect(() => {
-    fetchListCourseQuery(true, null)
+    fetchListProductsQuery(true, null)
       .then(value => {
         setTable([...value]);
       })
@@ -132,12 +132,12 @@ export default function Course() {
       });
   }, []);
 
-  const onCourseFilterSearch = async (
+  const onStudentFilterSearch = async (
     selectedItem,
     selectedIndex,
     fieldValue
   ) => {
-    fetchFilterListCourseQuery(selectedIndex, fieldValue)
+    fetchFilterListProductsQuery(selectedIndex, fieldValue)
       .then(value => {
         if (value) setTable([...value]);
         else setTable([]);
@@ -150,26 +150,28 @@ export default function Course() {
   const handleSelectedRow = async rowId => {
     try {
       const response = await API.graphql(
-        graphqlOperation(getCourse, {
+        graphqlOperation(getStudent, {
           id: rowId
         })
       );
 
-      const data = response.data.getCourse;
+      const data = response.data.getStudent;
 
-      setSelectedCourse({
+      setSelectedStudent({
         id: data.id,
-        title: data.title,
-        teacherName: data.teacherName,
-        startAt: data.startAt
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        email: data.email,
+        courseID: data.courseID
       });
     } catch (error) {
-      console.log("error - fetchGetCourseQuery", error);
+      console.log("error - fetchGetStudentQuery", error);
     }
   };
 
-  const handleFetchListCourseQuery = () => {
-    fetchListCourseQuery(false)
+  const handleFetchListProductsQuery = () => {
+    fetchListProductsQuery(false)
       .then(value => {
         if (value) setTable([...table, ...value]);
       })
@@ -182,13 +184,13 @@ export default function Course() {
     <GridContainer>
       <GridItem xs={12} sm={12} md={6}>
         <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>קורסים</h4>
+          <CardHeader color="success">
+            <h4 className={classes.cardTitleWhite}>רשימת תלמידים</h4>
           </CardHeader>
           <CardBody>
             <CustomizedFilter
               filterItems={filterItems}
-              onFilterSearch={onCourseFilterSearch}
+              onFilterSearch={onStudentFilterSearch}
             />
 
             <EnhancedTableRadio
@@ -198,16 +200,16 @@ export default function Course() {
               tableHead={headCells}
               tableData={table}
               onSelectedRow={handleSelectedRow}
-              onGetMoreRows={handleFetchListCourseQuery}
+              onGetMoreRows={handleFetchListProductsQuery}
             />
           </CardBody>
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={6}>
-        <CourseForm
-          selcetedCourseInput={selectedCourse}
-          createCourse={handleCreateCourse}
-          updateCourse={handleUpdateCourse}
+        <StudentForm
+          selcetedStudentInput={selectedStudent}
+          createStudent={handleCreateStudent}
+          updateStudent={handleUpdateStudent}
         />
       </GridItem>
 
