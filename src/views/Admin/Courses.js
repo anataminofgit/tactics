@@ -187,39 +187,40 @@ export default function Courses() {
   };
 
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={6}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>קורסים</h4>
-          </CardHeader>
-          <CardBody>
-            <CustomizedFilter
-              filterItems={filterItems}
-              onFilterSearch={onCourseFilterSearch}
-            />
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>קורסים</h4>
+            </CardHeader>
+            <CardBody>
+              <CustomizedFilter
+                filterItems={filterItems}
+                onFilterSearch={onCourseFilterSearch}
+              />
+              <EnhancedTableRadio
+                id="EnhancedTableRadio"
+                initialOrderBy={label}
+                tableHeaderColor="warning"
+                tableHead={headCells}
+                tableData={table}
+                onSelectedRow={handleSelectedRow}
+                onGetMoreRows={handleFetchListCourseQuery}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={6}>
+          <CourseForm
+            selcetedCourseInput={selectedCourse}
+            createCourse={handleCreateCourse}
+            updateCourse={handleUpdateCourse}
+          />
+        </GridItem>
 
-            <EnhancedTableRadio
-              id="EnhancedTableRadio"
-              initialOrderBy={label}
-              tableHeaderColor="warning"
-              tableHead={headCells}
-              tableData={table}
-              onSelectedRow={handleSelectedRow}
-              onGetMoreRows={handleFetchListCourseQuery}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={6}>
-        <CourseForm
-          selcetedCourseInput={selectedCourse}
-          createCourse={handleCreateCourse}
-          updateCourse={handleUpdateCourse}
-        />
-      </GridItem>
-
-      <GridItem xs={12} sm={12} md={6}></GridItem>
-    </GridContainer>
+        <GridItem xs={12} sm={12} md={6}></GridItem>
+      </GridContainer>
+    </div>
   );
 }

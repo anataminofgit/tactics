@@ -163,6 +163,7 @@ export default function StudentForm(props) {
             <GridContainer>
               <GridItem xs={12} sm={12} md={10}>
                 <CustomInput
+                  color="success"
                   onChange={handleInputChange}
                   labelText="מספר טלפון"
                   id="phone"
@@ -181,6 +182,7 @@ export default function StudentForm(props) {
               <GridItem xs={12} sm={12} md={6}>
                 <GridContainer>
                   <AsyncAutoComplete
+                    color="success"
                     fieldList="title"
                     asyncGetList={fetchAllCourseQuery}
                     onSelected={handleCourseSelected}

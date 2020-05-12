@@ -34,6 +34,7 @@ export default function Snackbar(props) {
   }
   return (
     <Snack
+      autoHideDuration={2000}
       anchorOrigin={{
         vertical: place.indexOf("t") === -1 ? "bottom" : "top",
         horizontal:
