@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
@@ -9,17 +10,17 @@ import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/views/rtlStyle.js";
 import EnhancedTableRadio from "../../components/Table/EnhancedTableRadio";
 import TaskForm from "./taskForm";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 
 import { createTask, updateTask } from "../../graphql/mutations";
-import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import {
   fetchAllTaskByCourseQuery,
   fetchTaskByCourse
 } from "../../queries/TaskQueries";
 
-export default function SelectedCourse(props) {
-  const { selectedCourseID } = props;
+export default function SelectedCourse() {
+  // const { selectedCourseID } = props;
   const [table, setTable] = useState([]);
   const [selectedTask, setSelectedTask] = useState({
     id: null,
@@ -29,6 +30,10 @@ export default function SelectedCourse(props) {
     toUpload: false
   });
 
+  const selectedCourseID = useSelector(
+    state => state.selectedCourse.selectedCourse.id
+  );
+  //console.log("selectedCourseID - selector", selectedCourseID);
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
@@ -195,6 +200,6 @@ export default function SelectedCourse(props) {
   );
 }
 
-SelectedCourse.propTypes = {
+/* SelectedCourse.propTypes = {
   selectedCourseID: PropTypes.string
-};
+}; */
