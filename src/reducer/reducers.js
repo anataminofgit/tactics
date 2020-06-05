@@ -14,11 +14,13 @@ export function gethAuth() {
   };
 }
 
-export function setSelectedCourse(id) {
-  return {
-    type: SET_SELECTED_COURSE,
-    selectedCourse: id
-  };
+export function setSelectedCourse(value) {
+  return value
+    ? {
+        type: SET_SELECTED_COURSE,
+        selectedCourse: value
+      }
+    : { id: null, title: "" };
 }
 
 const initialAuth = {
@@ -26,7 +28,7 @@ const initialAuth = {
 };
 
 const initialSelectedCourse = {
-  selectedCourse: { id: null, title: [] }
+  selectedCourse: { id: null, title: "" }
 };
 
 const authReducer = (state = initialAuth, action) => {

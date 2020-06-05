@@ -23,14 +23,15 @@ export default function EnhancedTableHead(props) {
       if (headCell.label !== null)
         return (
           <TableCell
+            padding={headCell.disablePadding ? "none" : "default"}
+            sortDirection={orderBy === headCell.id ? order : false}
             align="right"
             key={headCell.label}
-            sortDirection={orderBy === headCell.label ? order : false}
           >
             {headCell.toSort === true ? (
               <TableSortLabel
                 align="right"
-                active={orderBy === headCell.label}
+                active={orderBy === headCell.id}
                 direction={orderBy === headCell.label ? order : "asc"}
                 onClick={createSortHandler(headCell.label)}
               >
@@ -53,10 +54,7 @@ export default function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
-        <TableCell align="right"></TableCell>
-        {renderCell()}
-      </TableRow>
+      <TableRow>{renderCell()}</TableRow>
     </TableHead>
   );
 }

@@ -16,7 +16,6 @@ export default function AsyncAutoComplete(props) {
   const [inputValue, setInputValue] = React.useState(initInputValue);
 
   const hadleChange = (event, value, reason) => {
-    //setValue(value);
     onSelected(value, reason);
   };
 

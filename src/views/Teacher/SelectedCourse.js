@@ -13,7 +13,7 @@ import TaskForm from "./taskForm";
 //import PropTypes from "prop-types";
 
 import { createTask, updateTask } from "../../graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation /* , Auth  */ } from "aws-amplify";
 import {
   fetchAllTaskByCourseQuery,
   fetchTaskByCourse
@@ -33,7 +33,7 @@ export default function SelectedCourse() {
   const selectedCourseID = useSelector(
     state => state.selectedCourse.selectedCourse.id
   );
-  //console.log("selectedCourseID - selector", selectedCourseID);
+
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
@@ -193,7 +193,6 @@ export default function SelectedCourse() {
             updateTask={handleUpdateTask}
           />
         </GridItem>
-
         <GridItem xs={12} sm={12} md={6}></GridItem>
       </GridContainer>
     </div>

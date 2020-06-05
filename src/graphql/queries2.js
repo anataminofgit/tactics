@@ -159,3 +159,26 @@ export const getTask = /* GraphQL */ `
     }
   }
 `;
+
+export const getProductsCourse = /* GraphQL */ `
+  query GetCourse($id: ID!) {
+    getCourse(id: $id) {
+      id
+      queryName
+      title
+      teacherName
+      startAt
+      teacherEmail
+      products {
+        items {
+          id
+          courseID
+          queryName
+          productName
+          productPrice
+        }
+        nextToken
+      }
+    }
+  }
+`;

@@ -54,7 +54,6 @@ export default function EnhancedTableRadio(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -88,7 +87,6 @@ export default function EnhancedTableRadio(props) {
 
   const renderCell = row => {
     return tableHead.map((item, index) => {
-
       if (item.label !== null)
         return (
           <TableCell key={index} align="right">
@@ -116,7 +114,16 @@ export default function EnhancedTableRadio(props) {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              tableHead={tableHead}
+              tableHead={[
+                {
+                  id: "radioButton",
+                  numeric: false,
+                  disablePadding: true,
+                  label: "",
+                  toSort: false
+                },
+                ...tableHead
+              ]}
               tableHeaderColor={tableHeaderColor}
             />
             <TableBody>
@@ -188,6 +195,5 @@ EnhancedTableRadio.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.object).isRequired,
   initialOrderBy: PropTypes.string.isRequired,
   onSelectedRow: PropTypes.func.isRequired,
-  tableNextToken: PropTypes.bool,
   onGetMoreRows: PropTypes.func.isRequired
 };
