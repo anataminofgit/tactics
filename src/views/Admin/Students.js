@@ -11,11 +11,12 @@ import CustomizedFilter from "components/Table/CustomizedFilter.js";
 import StudentForm from "./studentForm";
 
 import { getStudent } from "../../graphql/queries2";
-import { createStudent, updateStudent } from "../../graphql/mutations";
+import { createStudent /* , updateStudent */ } from "../../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import {
   fetchListStudentsQuery,
-  fetchFilterListStudentsQuery
+  fetchFilterListStudentsQuery,
+  fetchUpdateStudent
 } from "../../queries/StudentQueries";
 
 export default function Students() {
@@ -95,21 +96,10 @@ export default function Students() {
     }
   };
 
-  const handleUpdateStudent = async (Student, courseId) => {
+  const handleUpdateStudent = async (student, courseId) => {
     try {
-      await API.graphql(
-        graphqlOperation(updateStudent, {
-          input: {
-            id: Student.id,
-            name: Student.name,
-            queryName: "Student",
-            phone: Student.phone,
-            address: Student.address,
-            email: Student.email,
-            courseID: courseId
-          }
-        })
-      );
+      await fetchUpdateStudent(student, courseId);
+
       fetchListStudentsQuery(true)
         .then(value => {
           setTable([...value]);

@@ -566,3 +566,49 @@ export const studentsByName = /* GraphQL */ `
     }
   }
 `;
+export const studentsByEmail = /* GraphQL */ `
+  query StudentsByEmail(
+    $queryName: String
+    $email: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStudentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    studentsByEmail(
+      queryName: $queryName
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        queryName
+        address
+        phone
+        email
+        courseID
+        taskswithAndwer {
+          items {
+            id
+            uploadPath
+            studentID
+          }
+          nextToken
+        }
+        studentProducts {
+          items {
+            id
+            studentID
+            quantity
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;

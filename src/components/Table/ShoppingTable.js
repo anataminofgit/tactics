@@ -14,14 +14,7 @@ import Button from "components/CustomButtons/Button.js";
 
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
-
-//import Edit from "@material-ui/icons/Edit";
-//import Icon from "@material-ui/core/Icon";
-//import Remove from "@material-ui/icons/Remove";
 import { green } from "@material-ui/core/colors";
-
-//import Close from "@material-ui/icons/Close";
-//import Check from "@material-ui/icons/Check";
 import TableHead from "@material-ui/core/TableHead";
 
 // core components
@@ -31,29 +24,37 @@ const useStyles = makeStyles(styles);
 
 export default function ShoppingTable(props) {
   const classes = useStyles();
-
-  const [productQuantity, setQuantity] = React.useState(
-    new Array(props.products.length).fill(0)
-  );
-
+  const {
+    products,
+    rtlActive,
+    tableHead,
+    tableHeaderColor,
+    onSubmitOrder
+  } = props;
   const [total, setTotal] = React.useState(0);
+  const tableCellClasses = classnames(classes.tableCell, {
+    [classes.tableCellRTL]: rtlActive
+  });
+  const [productQuantity, setProductQuantity] = React.useState([]);
+  const [productsTotals, setProductsTotals] = React.useState();
 
-  const [productsTotals, setProductTotal] = React.useState(
-    new Array(props.products.length).fill(0)
-  );
+  const handleSubmitOrder = () => {
+    onSubmitOrder(productQuantity);
+  };
 
   const handleMinus = event => {
     const index = event.target.id;
     const arrayQuantity = [...productQuantity];
     const arrayTotals = [...productsTotals];
-    if (arrayQuantity[index] > 0) {
-      arrayQuantity[index] = arrayQuantity[index] - 1;
-      setQuantity(arrayQuantity);
+    if (arrayQuantity[index].quantity > 0) {
+      arrayQuantity[index].quantity = arrayQuantity[index].quantity - 1;
+      setProductQuantity(arrayQuantity);
     }
-    arrayTotals[index] = arrayQuantity[index] * props.prices[index];
-    setProductTotal(arrayTotals);
-    const sum = arrayTotals.reduce(function(a, b) {
-      return a + b;
+    arrayTotals[index] =
+      arrayQuantity[index].quantity * products[index].productPrice;
+    setProductsTotals(arrayTotals);
+    const sum = arrayTotals.reduce(function(acc, item) {
+      return acc + item;
     }, 0);
     setTotal(sum);
   };
@@ -62,29 +63,32 @@ export default function ShoppingTable(props) {
     const index = event.target.id;
     const arrayQuantity = [...productQuantity];
     const arrayTotals = [...productsTotals];
-    arrayQuantity[index] = arrayQuantity[index] + 1;
-    setQuantity(arrayQuantity);
-    arrayTotals[index] = arrayQuantity[index] * props.prices[index];
-    setProductTotal(arrayTotals);
-    const sum = arrayTotals.reduce(function(a, b) {
-      return a + b;
+    arrayQuantity[index].quantity = arrayQuantity[index].quantity + 1;
+    setProductQuantity(arrayQuantity);
+
+    arrayTotals[index] =
+      arrayQuantity[index].quantity * products[index].productPrice;
+    setProductsTotals(arrayTotals);
+    const sum = arrayTotals.reduce(function(acc, item) {
+      return acc + item;
     }, 0);
     setTotal(sum);
   };
-  /* const handleToggle = value => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  }; */
-  const { prices, products, rtlActive, tableHead, tableHeaderColor } = props;
-  const tableCellClasses = classnames(classes.tableCell, {
-    [classes.tableCellRTL]: rtlActive
-  });
+
+  React.useEffect(() => {
+    setProductsTotals(
+      products.reduce((acc, product) => {
+        return [...acc, product.quantity * product.productPrice];
+      }, [])
+    );
+    setProductQuantity(
+      products.reduce((acc, product) => {
+        return [...acc, { quantity: product.quantity, id: product.id }];
+      }, [])
+    );
+    return () => {};
+  }, [products]);
+
   return (
     <Table className={classes.table}>
       {tableHead !== undefined ? (
@@ -104,41 +108,44 @@ export default function ShoppingTable(props) {
         </TableHead>
       ) : null}
       <TableBody>
-        {products.map((prop, key) => {
+        {products.map((product, index) => {
           return (
-            <TableRow key={key} className={classes.tableRow}>
+            <TableRow key={index} className={classes.tableRow}>
               <TableCell className={tableCellClasses}>
-                {products[key]}
+                {product.productName}
               </TableCell>
-              <TableCell className={tableCellClasses}>{prices[key]}</TableCell>
-
+              <TableCell className={tableCellClasses}>
+                {product.productPrice}
+              </TableCell>
               <TableCell className={classes.tableActions}>
                 <IconButton
-                  id={key}
-                  value={key}
+                  id={index}
+                  value={index}
                   onClick={handlePlus}
                   aria-label="Add"
                   className={classes.iconButton}
                 >
-                  <Icon id={key} value={key} style={{ color: green[500] }}>
+                  <Icon id={index} value={index} style={{ color: green[500] }}>
                     add_circle
                   </Icon>
                 </IconButton>
-                <p className={classes.top}>{productQuantity[key]}</p>
+                <p className={classes.top}>
+                  {productQuantity[index] ? productQuantity[index].quantity : 0}
+                </p>
                 <IconButton
-                  id={key}
-                  value={key}
+                  id={index}
+                  value={index}
                   aria-label="Remove"
                   className={classes.iconButton}
                   onClick={handleMinus}
                 >
-                  <Icon id={key} value={key} color="secondary">
+                  <Icon id={index} value={index} color="secondary">
                     remove_circle
                   </Icon>
                 </IconButton>
               </TableCell>
               <TableCell className={tableCellClasses}>
-                {productsTotals[key]}
+                {productsTotals[index]}
               </TableCell>
             </TableRow>
           );
@@ -163,7 +170,7 @@ export default function ShoppingTable(props) {
           <TableCell />
 
           <TableCell className={tableCellClasses}>
-            <Button size="lg" color="warning">
+            <Button onClick={handleSubmitOrder} size="lg" color="warning">
               הזמנה
             </Button>
           </TableCell>
@@ -178,12 +185,10 @@ ShoppingTable.defaultProps = {
 };
 
 ShoppingTable.propTypes = {
-  handleMinus: PropTypes.func,
-  handlePlus: PropTypes.func,
+  onSubmitOrder: PropTypes.func.isRequired,
   tableHead: PropTypes.arrayOf(PropTypes.string),
   rtlActive: PropTypes.bool,
-  prices: PropTypes.arrayOf(PropTypes.number),
-  products: PropTypes.arrayOf(PropTypes.string),
+  products: PropTypes.arrayOf(PropTypes.object),
   tableHeaderColor: PropTypes.oneOf([
     "warning",
     "primary",

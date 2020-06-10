@@ -1,38 +1,73 @@
 import React, { createContext, useEffect } from "react";
 import PropTypes from "prop-types";
+import { studentsByEmail } from "../graphql/queries2";
 
 import { Auth } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = props => {
   const [userInfo, setUserInfo] = React.useState({
-    authUser: null,
-    authGroup: []
+    email: "",
+    authGroup: [],
+    id: null,
+    name: "",
+    address: "",
+    phone: "",
+    courseID: null
   });
 
-  const updateAuthInfo = (user, group) => {
-    setUserInfo({ authUser: user, authGroup: group });
+  const updateAuthInfo = userInfo => {
+    setUserInfo(userInfo);
   };
 
   async function getAuth() {
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      const groups = user.signInUserSession.idToken.payload["cognito:groups"];
-      const { email } = user.signInUserSession.idToken.payload;
+    return Auth.currentAuthenticatedUser()
+      .then(async user => {
+        const groups = user.signInUserSession.idToken.payload["cognito:groups"];
+        const { email } = user.signInUserSession.idToken.payload;
 
-      console.log("user groups:", email, groups);
+        try {
+          const response = await API.graphql(
+            graphqlOperation(studentsByEmail, {
+              queryName: "Student",
+              email: { eq: email }
+            })
+          );
 
-      return { email: email, authGroup: groups };
-    } catch (error) {
-      console.log("error - getAuth", error);
-    }
+          if (!response) console.log("error - User not exsist in the DB");
+          const data = response.data.studentsByEmail.items[0];
+          const nextToken = response.data.studentsByEmail.nextToken;
+          if (nextToken !== null)
+            console.log("error - duplicate studentsByEmail", nextToken);
+          return {
+            email: email,
+            authGroup: groups,
+            studentID: data.id,
+            courseID: data.courseID,
+            name: data.name,
+            address: data.address,
+            phone: data.phone
+          };
+        } catch (error) {
+          console.log("error - getAuth", error);
+          return { email: "", authGroup: [] };
+        }
+      })
+      .catch(err => {
+        console.log("currentAuthenticatedUser", err);
+      });
   }
 
   useEffect(() => {
-    getAuth().then(value => {
-      if (value) updateAuthInfo(value.email, value.authGroup);
-    });
+    getAuth()
+      .then(value => {
+        if (value) updateAuthInfo(value);
+      })
+      .catch(err => {
+        console.log("err - getAuth", err);
+      });
 
     return () => {
       // cleanup

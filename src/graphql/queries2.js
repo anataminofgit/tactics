@@ -182,3 +182,56 @@ export const getProductsCourse = /* GraphQL */ `
     }
   }
 `;
+
+export const studentsByEmail = /* GraphQL */ `
+  query StudentsByEmail(
+    $queryName: String
+    $email: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStudentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    studentsByEmail(
+      queryName: $queryName
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        queryName
+        address
+        phone
+        email
+        courseID
+      }
+      nextToken
+    }
+  }
+`;
+
+export const getStudentProducts = /* GraphQL */ `
+  query GetStudent($id: ID!) {
+    getStudent(id: $id) {
+      studentProducts {
+        items {
+          id
+          studentID
+          product {
+            id
+            courseID
+            queryName
+            productName
+            productPrice
+          }
+          quantity
+        }
+        nextToken
+      }
+    }
+  }
+`;

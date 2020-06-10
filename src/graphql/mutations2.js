@@ -62,6 +62,36 @@ export const updateStudent = /* GraphQL */ `
       phone
       email
       courseID
+      taskswithAndwer {
+        items {
+          id
+          uploadPath
+          studentID
+          task {
+            id
+            courseID
+            taskTitle
+            taskContent
+            toUpload
+          }
+        }
+        nextToken
+      }
+      studentProducts {
+        items {
+          id
+          studentID
+          product {
+            id
+            courseID
+            queryName
+            productName
+            productPrice
+          }
+          quantity
+        }
+        nextToken
+      }
     }
   }
 `;

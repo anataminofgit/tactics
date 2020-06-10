@@ -13,8 +13,6 @@ type Course @model
   products: [Product] @connection(keyName: "byCourse", fields: ["id"])
 }
 
-# Create a join model and disable queries as you don't need them
-# and can query through Post.editors and User.posts
 
 type TaskWithAnswer
 @model
@@ -71,6 +69,7 @@ type StudentProduct
 type Student @model 
  @key(name: "byStudentCourse", fields: ["courseID"])
  @key(name: "queryName", fields:["queryName", "name"], queryField: "studentsByName" ) 
+ @key(name: "queryEmail", fields:["queryName", "email"], queryField: "studentsByEmail" ) 
 {
   id: ID!
   name: String!
