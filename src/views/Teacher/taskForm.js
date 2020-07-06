@@ -19,6 +19,8 @@ import FormControl from "@material-ui/core/FormControl";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import TextField from "@material-ui/core/TextField";
+
 //import styles from "assets/jss/material-dashboard-react/components/tasksStyle.js";
 
 const styles = {
@@ -86,7 +88,7 @@ export default function TaskForm(props) {
               <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
                   labelText="ID (disabled)"
-                  id="ID-disabled"
+                  id="task-ID-disabled"
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -131,17 +133,18 @@ export default function TaskForm(props) {
             </GridContainer>
             <GridContainer>
               <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                  labelText="תוכן"
+                <TextField
                   id="taskContent"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    onChange: handleInputChange,
-                    value: inputValues.taskContent || "",
-                    name: "taskContent"
-                  }}
+                  label="תוכן ההודעה"
+                  multiline
+                  rtl
+                  rows={4}
+                  defaultValue={inputValues.taskContent || ""}
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleInputChange}
+                  value={inputValues.taskContent || ""}
+                  name="taskContent"
                 />
               </GridItem>
             </GridContainer>

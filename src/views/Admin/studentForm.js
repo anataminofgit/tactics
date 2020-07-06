@@ -99,7 +99,7 @@ export default function StudentForm(props) {
               <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
                   labelText="ID (disabled)"
-                  id="ID-disabled"
+                  id="student-ID-disabled"
                   formControlProps={{
                     fullWidth: true
                   }}

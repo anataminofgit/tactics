@@ -75,7 +75,7 @@ export default function ShoppingList() {
                 studentProductID: null
               };
             }
-            console.log("values", values);
+            // console.log("values", values);
             const studentItems = values[1];
             for (let index in studentItems) {
               const productID = studentItems[index].productID;

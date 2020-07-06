@@ -406,7 +406,7 @@ export default function EditableTable(props) {
               {stableSort(Object.values(table), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
-                  console.log("row", row);
+                  //console.log("row", row);
                   return (
                     <TableRow key={row.id} align="right">
                       {renderCells(row)}

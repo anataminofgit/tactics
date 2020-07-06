@@ -149,7 +149,7 @@ export default function CourseForm(props) {
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="ID (disabled)"
-                    id="ID-disabled"
+                    id="course-ID-disabled"
                     formControlProps={{
                       fullWidth: true
                     }}
