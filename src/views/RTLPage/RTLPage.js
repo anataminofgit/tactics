@@ -33,7 +33,7 @@ import avatar from "assets/img/faces/marc.jpg";
 
 import { AuthContext } from '../../context/authContext';
 
-
+import DNAEditor   from "../../components/Editor/DNAEditor"
 
 const useStyles = makeStyles(styles);
 
@@ -92,21 +92,13 @@ export default function RTLPage() {
           <Card>
             
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>כותרת של כרטיס 1</h4>
+              <h4 className={classes.cardTitleWhite}>DNA Editor</h4>
               <p className={classes.cardCategoryWhite}>
               </p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["کد", "نام", "حقوق", "استان"]}
-                tableData={[
-                  ["1", " זה עולה כך וכך", "$36,738", "مازندران"],
-                  ["2", "مینا رضایی	", "$23,789", "گلستان"],
-                  ["3", "مبینا احمدپور	", "$56,142", "تهران"],
-                  ["4", "جلال آقایی	", "$38,735", "شهرکرد"]
-                ]}
-              />
+              
+              <DNAEditor validation="AGTC"/>
             </CardBody>
           </Card>
         </GridItem>

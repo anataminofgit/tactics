@@ -1,0 +1,48 @@
+
+.DNAEditor {
+    direction: rtl;
+    text-align: left;
+    /* border: solid black; */
+}
+
+.statement{
+    color: red;
+}
+/* .other{
+    color:  black;
+} */
+
+.editor {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    width: auto;
+    height: 100px;
+    overflow: scroll;
+    direction: ltr;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.editor .col2 div{
+    display: inline;
+}
+
+.editor .col1 div{
+    text-align: right;
+}
+
+.col1 , .col2 {
+  /* border: solid;   */
+  width :80%;
+  margin: 10px;
+}
+
+
+.col1{
+    flex-grow: 1;
+}
+.col2{
+    flex-grow: 11;
+}
