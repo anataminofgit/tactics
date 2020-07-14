@@ -2,11 +2,11 @@
 .DNAEditor {
     direction: rtl;
     text-align: left;
-    /* border: solid black; */
 }
 
 .statement{
-    color: red;
+    
+    color:red;
 }
 /* .other{
     color:  black;

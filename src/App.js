@@ -12,7 +12,7 @@ import { withAuthenticator } from "aws-amplify-react";
 
 import AuthContextProvider from "../src/context/authContext";
 import tacticsStore from "./reducer/reducers";
-
+import "App.css";
 const hist = createBrowserHistory();
 
 function App() {

@@ -26,7 +26,6 @@ export default function DNAEditor() {
   //const { validation } = props;
   //constt  [textEditor, setTextEdior] = useState([]);
   const colRef = React.useRef(null);
-  const textRef = React.useRef(null);
   const txt = input.text;
 
   console.log("DNAEditor", colRef.current);
@@ -53,19 +52,6 @@ export default function DNAEditor() {
     });
   };
 
-  // React.useEffect(() => {
-  // }, [colRef]);
-
-  // const countLines = () => {
-  //   console.log("aaa", colRef);
-
-  //   let el = colRef.current;
-  //   console.log("el", el);
-  //   let divHeight = el.offsetHeight;
-  //   let lineHeight = parseInt(el.style.lineHeight);
-  //   return divHeight / lineHeight;
-  // };
-
   const renderCol = () => {
     let num = 0;
     let el = colRef.current;
@@ -76,7 +62,7 @@ export default function DNAEditor() {
       let line = divWidth / 12;
       num = Math.trunc(txt.length / line);
 
-      console.log("divWidth", divWidth, "line", line, "num", num,  txt.length);
+      // console.log("divWidth", divWidth, "line", line, "num", num,  txt.length);
 
       return Array(num)
         .fill()
@@ -100,4 +86,3 @@ export default function DNAEditor() {
 DNAEditor.propTypes = {
   validation: PropTypes.string
 };
-
