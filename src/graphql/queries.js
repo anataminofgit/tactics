@@ -25,6 +25,8 @@ export const getCourse = /* GraphQL */ `
           studentProducts {
             nextToken
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -36,10 +38,14 @@ export const getCourse = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -52,12 +58,18 @@ export const getCourse = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -84,6 +96,8 @@ export const listCourses = /* GraphQL */ `
             phone
             email
             courseID
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -94,6 +108,8 @@ export const listCourses = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -104,9 +120,13 @@ export const listCourses = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           nextToken
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -131,12 +151,20 @@ export const getTaskWithAnswer = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         taskTitle
         taskContent
         toUpload
+        createdAt
+        updatedAt
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -158,11 +186,17 @@ export const listTaskWithAnswers = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -184,15 +218,23 @@ export const getTask = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       taskTitle
       taskContent
       toUpload
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -216,11 +258,17 @@ export const listTasks = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         taskTitle
         taskContent
         toUpload
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -243,14 +291,22 @@ export const getProduct = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         quantity
+        createdAt
+        updatedAt
       }
       productName
       productPrice
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -274,11 +330,17 @@ export const listProducts = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -302,13 +364,21 @@ export const getStudentProduct = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       quantity
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -330,11 +400,17 @@ export const listStudentProducts = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         quantity
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -361,7 +437,11 @@ export const getStudent = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -375,11 +455,17 @@ export const getStudent = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -403,6 +489,8 @@ export const listStudents = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -411,9 +499,13 @@ export const listStudents = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           nextToken
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -452,6 +544,8 @@ export const coursesByName = /* GraphQL */ `
             phone
             email
             courseID
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -462,6 +556,8 @@ export const coursesByName = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -472,9 +568,13 @@ export const coursesByName = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           nextToken
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -510,11 +610,17 @@ export const productsByName = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -550,6 +656,8 @@ export const studentsByName = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -558,9 +666,13 @@ export const studentsByName = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           nextToken
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -596,6 +708,8 @@ export const studentsByEmail = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -604,9 +718,13 @@ export const studentsByEmail = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           nextToken
         }
+        createdAt
+        updatedAt
       }
       nextToken
     }

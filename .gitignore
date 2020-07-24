@@ -33,3 +33,13 @@ amplify/backend/awscloudformation
 build/
 dist/
 node_modules/
+.graphqlconfig.yml
+amplify/backend/api/tactics/resolvers
+.graphqlconfig.yml
+aws passwords.txt
+.graphqlconfig.yml
+amplify/backend/api/tactics/stacks/CustomResources.json
+amplify/backend/auth/tactics393c3919/parameters.json
+amplify/backend/auth/tactics393c3919/tactics393c3919-cloudformation-template.yml
+amplify/backend/auth/tacticse351a949/parameters.json
+amplify/backend/auth/tacticse351a949/tacticse351a949-cloudformation-template.yml

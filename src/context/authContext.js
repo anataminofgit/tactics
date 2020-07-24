@@ -19,6 +19,7 @@ const AuthContextProvider = props => {
   });
 
   const updateAuthInfo = userInfo => {
+    console.log("user info", userInfo);
     setUserInfo(userInfo);
   };
 
@@ -28,6 +29,7 @@ const AuthContextProvider = props => {
         const groups = user.signInUserSession.idToken.payload["cognito:groups"];
         const { email } = user.signInUserSession.idToken.payload;
 
+        console.log(`user email: ${email}, groups:${groups}`);
         try {
           const response = await API.graphql(
             graphqlOperation(studentsByEmail, {
@@ -66,7 +68,7 @@ const AuthContextProvider = props => {
         if (value) updateAuthInfo(value);
       })
       .catch(err => {
-        console.log("err - getAuth", err);
+        console.log("err - ", err);
       });
 
     return () => {

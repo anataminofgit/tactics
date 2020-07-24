@@ -1,10 +1,9 @@
 {
 	"auth": {
-		"tacticse351a949": {
+		"tactics393c3919": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"customAuth": false
+			"dependsOn": []
 		}
 	},
 	"api": {
@@ -15,9 +14,10 @@
 				"authConfig": {
 					"additionalAuthenticationProviders": [],
 					"defaultAuthentication": {
-						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
-						"userPoolConfig": {
-							"userPoolId": "authtacticse351a949"
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "tacticsAPI",
+							"apiKeyExpirationDays": 7
 						}
 					}
 				}

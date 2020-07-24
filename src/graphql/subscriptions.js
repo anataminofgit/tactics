@@ -25,6 +25,8 @@ export const onCreateCourse = /* GraphQL */ `
           studentProducts {
             nextToken
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -36,10 +38,14 @@ export const onCreateCourse = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -52,12 +58,18 @@ export const onCreateCourse = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -85,6 +97,8 @@ export const onUpdateCourse = /* GraphQL */ `
           studentProducts {
             nextToken
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -96,10 +110,14 @@ export const onUpdateCourse = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -112,12 +130,18 @@ export const onUpdateCourse = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -145,6 +169,8 @@ export const onDeleteCourse = /* GraphQL */ `
           studentProducts {
             nextToken
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -156,10 +182,14 @@ export const onDeleteCourse = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -172,12 +202,18 @@ export const onDeleteCourse = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -200,12 +236,20 @@ export const onCreateTaskWithAnswer = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         taskTitle
         taskContent
         toUpload
+        createdAt
+        updatedAt
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -228,12 +272,20 @@ export const onUpdateTaskWithAnswer = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         taskTitle
         taskContent
         toUpload
+        createdAt
+        updatedAt
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -256,12 +308,20 @@ export const onDeleteTaskWithAnswer = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         taskTitle
         taskContent
         toUpload
+        createdAt
+        updatedAt
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -281,15 +341,23 @@ export const onCreateTask = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       taskTitle
       taskContent
       toUpload
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -309,15 +377,23 @@ export const onUpdateTask = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       taskTitle
       taskContent
       toUpload
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -337,15 +413,23 @@ export const onDeleteTask = /* GraphQL */ `
             id
             uploadPath
             studentID
+            createdAt
+            updatedAt
           }
           taskTitle
           taskContent
           toUpload
+          createdAt
+          updatedAt
         }
+        createdAt
+        updatedAt
       }
       taskTitle
       taskContent
       toUpload
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -366,14 +450,22 @@ export const onCreateProduct = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         quantity
+        createdAt
+        updatedAt
       }
       productName
       productPrice
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -394,14 +486,22 @@ export const onUpdateProduct = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         quantity
+        createdAt
+        updatedAt
       }
       productName
       productPrice
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -422,14 +522,22 @@ export const onDeleteProduct = /* GraphQL */ `
             id
             studentID
             quantity
+            createdAt
+            updatedAt
           }
           productName
           productPrice
+          createdAt
+          updatedAt
         }
         quantity
+        createdAt
+        updatedAt
       }
       productName
       productPrice
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -451,13 +559,21 @@ export const onCreateStudentProduct = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       quantity
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -479,13 +595,21 @@ export const onUpdateStudentProduct = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       quantity
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -507,13 +631,21 @@ export const onDeleteStudentProduct = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         productName
         productPrice
+        createdAt
+        updatedAt
       }
       quantity
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -538,7 +670,11 @@ export const onCreateStudent = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -552,11 +688,17 @@ export const onCreateStudent = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -581,7 +723,11 @@ export const onUpdateStudent = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -595,11 +741,17 @@ export const onUpdateStudent = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -624,7 +776,11 @@ export const onDeleteStudent = /* GraphQL */ `
             taskTitle
             taskContent
             toUpload
+            createdAt
+            updatedAt
           }
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -638,11 +794,17 @@ export const onDeleteStudent = /* GraphQL */ `
             queryName
             productName
             productPrice
+            createdAt
+            updatedAt
           }
           quantity
+          createdAt
+          updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
     }
   }
 `;
