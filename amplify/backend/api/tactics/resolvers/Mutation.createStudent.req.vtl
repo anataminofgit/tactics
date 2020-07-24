@@ -1,9 +1,18 @@
+## [Start] Set default values. **
+$util.qr($context.args.input.put("id", $util.defaultIfNull($ctx.args.input.id, $util.autoId())))
+#set( $createdAt = $util.time.nowISO8601() )
+## Automatically set the createdAt timestamp. **
+$util.qr($context.args.input.put("createdAt", $util.defaultIfNull($ctx.args.input.createdAt, $createdAt)))
+## Automatically set the updatedAt timestamp. **
+$util.qr($context.args.input.put("updatedAt", $util.defaultIfNull($ctx.args.input.updatedAt, $createdAt)))
+## [End] Set default values. **
+
+
+
 
 
 
 ## [Start] Prepare DynamoDB PutItem Request. **
-$util.qr($context.args.input.put("createdAt", $util.defaultIfNull($ctx.args.input.createdAt, $util.time.nowISO8601())))
-$util.qr($context.args.input.put("updatedAt", $util.defaultIfNull($ctx.args.input.updatedAt, $util.time.nowISO8601())))
 $util.qr($context.args.input.put("__typename", "Student"))
 #set( $condition = {
   "expression": "attribute_not_exists(#id)",
@@ -28,7 +37,7 @@ $util.qr($context.args.input.put("__typename", "Student"))
   "version": "2017-02-28",
   "operation": "PutItem",
   "key": #if( $modelObjectKey ) $util.toJson($modelObjectKey) #else {
-  "id":   $util.dynamodb.toDynamoDBJson($util.defaultIfNullOrBlank($ctx.args.input.id, $util.autoId()))
+  "id":   $util.dynamodb.toDynamoDBJson($ctx.args.input.id)
 } #end,
   "attributeValues": $util.dynamodb.toMapValuesJson($context.args.input),
   "condition": $util.toJson($condition)

@@ -43,3 +43,4 @@ amplify/backend/auth/tactics393c3919/parameters.json
 amplify/backend/auth/tactics393c3919/tactics393c3919-cloudformation-template.yml
 amplify/backend/auth/tacticse351a949/parameters.json
 amplify/backend/auth/tacticse351a949/tacticse351a949-cloudformation-template.yml
+.graphqlconfig.yml
